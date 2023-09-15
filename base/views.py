@@ -1,15 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from rest_framework import generics
 from .models import Event
 from .serializers import EventSerializer
-from rest_framework import generics
 
-# Create your views here.
-
-class EventView(generics.CreateAPIView):
+class EventView(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
-def home(request):
-    return HttpResponse('Home Page')
-
