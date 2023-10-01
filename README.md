@@ -347,6 +347,68 @@ or
 ```
 * Error Handling:
 
+### UPDATE
+* Endpoint Name: Update
+* Description: User can join and leave event
+* Endpoint Type: POST
+* Endpoint: event\leave
+* Parameters: Votes (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "date":[
+    "4/01/23",
+    "4/08/23",
+   ],
+  "jason_add": "no",
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "status": "failure"
+}
+```
+* Error Handling:
+
+### REMOVE
+* Endpoint Name: Remove
+* Description: Host can remove user from event
+* Endpoint Type: POST
+* Endpoint: event\remove
+* Parameters: User
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "username",
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "status": "failure"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters
+  - 401: Invalid authentication ???
+
 
 
 
