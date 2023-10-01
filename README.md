@@ -192,6 +192,7 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found, Participant Username not found
  
+![Alt text](./Sequence%20Diagram/Create%20Event%20SD.png)
 
 ### Hosted Events
 * Endpoint Name: Hosted Events
