@@ -37,7 +37,7 @@ Features for our application that we plan to implement are as followed:
 ```
 {
 "username": "username",
-"password": "password",
+"password": "password"
 }
 ```
   - Response:
@@ -53,9 +53,7 @@ or
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters
-  - 401: Invalid authentication
-  - 404: Username not found
+  - 400: Missing Body Parameters, Username not found
 
 ### Registration
 * Endpoint Name: Registration
@@ -69,7 +67,7 @@ or
 ```
 {
   "username": "username",
-  "password": "password",
+  "password": "password"
 }
 ```
   - Response:
@@ -98,38 +96,35 @@ or
   - Request:
 ```
 {
-  "username": "username",
+  "username": "username"
 }
 ```
   - Responses:
 ```
-{
-   "eventid": 1,
-   "name": "skiing",
-   "dates": "4/12/23", "4/14/23",
-   "participants": [
-    "joseph",
-    "brandon",
-   ],
-   "time": "tbd"
-},
-
-{
-   "eventid": 2,
-   "name": "movies",
-   "dates": [
-    "4/01/23",
-    "4/08/23",
-   ]
-   "participants": [
-    "joseph",
-    "brandon",
-   ],
-   "time": "tbd"
-}
+[
+  {
+    "eventid": 1,
+    "name": "skiing",
+    "host": "stephen",
+    "dates": ["4/12/23", "4/14/23"],
+    "participants": [
+      "joseph",
+      "brandon"
+    ]
+  },
+  {
+    "eventid": 2,
+    "name": "movies",
+    "dates": ["4/01/23", "4/08/23"],
+    "participants": [
+      "joseph",
+      "brandon"
+    ]
+  }
+]
 ```
 Error Handling:
-  - 400: Missing Body Parameters
+  - 400: Missing Body Parameters, Username not found
 
 
 ### Notifications
@@ -143,23 +138,22 @@ Error Handling:
   - Request:
 ```
 {
-  "username": "username",
+  "username": "username"
 }
 ```
   - Responses:
 ```
 {
-   "Vote on kicking "brandon",
-   "Vote on time"
+   "Vote on Date",
    "Invited to Camping :)"
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters
+  - 400: Missing Body Parameters, Username not found
  
 ### Create Event
 * Endpoint Name: Create Event
-* Description: Creates and hosts an event
+* Description: Creates and hosts an event, sends invites to participants' notifications
 * Endpoint Type: POST
 * Endpoint: event\create
 * Parameters: Event (JSON)
@@ -170,6 +164,7 @@ Error Handling:
 {
    "eventid": 1,
    "name": "skiing",
+   "host": "stephen",
    "dates": [
     "4/12/23",
     "4/14/23",
@@ -177,12 +172,10 @@ Error Handling:
    "participants": [
     "joseph",
     "brandon",
-   ],
-   "time": "tbd"
+   ]
 }
 ```
   - Response:
-
 
 ```
 {
@@ -197,8 +190,7 @@ or
 ```
 
 * Error Handling:
-  - 400: Missing Body Parameters
-  - 404: Participant Username not found
+  - 400: Missing Body Parameters, Username not found, Participant Username not found
  
 
 ### Hosted Events
@@ -217,50 +209,45 @@ or
 ```
   - Response(s):
 ```
-{
-   "eventid": 1,
-   "name": "skiing",
-   "dates": [
-    "4/12/23",
-    "4/14/23",
-   ]
-   "participants": [
-    "joseph",
-    "brandon",
-   ],
-   "time": "tbd"
-},
-
-{
-   "eventid": 2,
-   "name": "movies",
-   "dates": [
-    "4/01/23",
-    "4/08/23",
-   ]
-   "participants": [
-    "joseph",
-    "brandon",
-   ],
-   "time": "tbd"
-}
+[
+  {
+    "eventid": 1,
+    "name": "skiing",
+    "host": "stephen",
+    "dates": ["4/12/23", "4/14/23"],
+    "participants": [
+      "joseph",
+      "brandon"
+    ]
+  },
+  {
+    "eventid": 2,
+    "name": "movies",
+    "host": "jason",
+    "dates": ["4/01/23", "4/08/23"],
+    "participants": [
+      "joseph",
+      "brandon"
+    ]
+  }
+]
 ```
 * Error Handling:
-  - 400: Missing Body Parameters
-  - 404: Participant Username not found
+  - 400: Missing Body Parameters, Username not found
 
 ### Push Voting
 * Endpoint Name: Push Votes
 * Description: Hosted User can PUSH vote objectives onto participating users
 * Endpoint Type: POST
 * Endpoint: \push
-* Parameters: category (String)
+* Parameters: Event ID (Integer), Category (String)
 * Return Type: JSON
 * Example Case:
   - Request:
 ```
 {
-  "category": "date",
+  "event_id": 123,
+  "category": "date"
 }
 ```
   - Response(s):
@@ -276,121 +263,25 @@ or
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters
-  - 401: Invalid authentication ???
-  - 404: Participant Username not found ???
+  - 400: Missing Body Parameters, Username not found
 
 ### Voting
 * Endpoint Name: Vote
-* Description: Participants of an event can vote on specified categories
+* Description: Participants of an event can vote on preferred date
 * Endpoint Type: POST
 * Endpoint: \vote
-* Parameters: Votes (String)
-* Return Type: JSON
-* Example Case:
-  - Request:
-```
-{
-  "date":[
-    "4/01/23",
-    "4/08/23",
-   ],
-  "jason_add": "no",
-}
-```
-  - Response(s):
-```
-{
-  "status": "success"
-}
-```
-or 
-```
-{
-  "status": "failure"
-}
-```
-* Error Handling:
-  - 400: Missing Body Parameters
-  - 401: Invalid authentication ???
-  - 404: Participant Username not found ???
-
-### Join
-* Endpoint Name: Vote
-* Description: Participants of an event can leave an event
-* Endpoint Type: POST
-* Endpoint: event\leave
-* Parameters: Votes (String)
-* Return Type: JSON
-* Example Case:
-  - Request:
-```
-{
-  "date":[
-    "4/01/23",
-    "4/08/23",
-   ],
-  "jason_add": "no",
-}
-```
-  - Response(s):
-```
-{
-  "status": "success"
-}
-```
-or 
-```
-{
-  "status": "failure"
-}
-```
-* Error Handling:
-
-### UPDATE
-* Endpoint Name: Update
-* Description: User can join and leave event
-* Endpoint Type: POST
-* Endpoint: event\leave
-* Parameters: Votes (String)
-* Return Type: JSON
-* Example Case:
-  - Request:
-```
-{
-  "date":[
-    "4/01/23",
-    "4/08/23",
-   ],
-  "jason_add": "no",
-}
-```
-  - Response(s):
-```
-{
-  "status": "success"
-}
-```
-or 
-```
-{
-  "status": "failure"
-}
-```
-* Error Handling:
-
-### REMOVE
-* Endpoint Name: Remove
-* Description: Host can remove user from event
-* Endpoint Type: POST
-* Endpoint: event\remove
-* Parameters: User
+* Parameters: Username (String), Event ID (Integer), Votes (String)
 * Return Type: JSON
 * Example Case:
   - Request:
 ```
 {
   "username": "username",
+  "event_id": 123,
+  "date":[
+    "4/01/23",
+    "4/08/23",
+   ]
 }
 ```
   - Response(s):
@@ -406,8 +297,99 @@ or
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters
-  - 401: Invalid authentication ???
+  - 400: Missing Body Parameters, Username not found
+
+### Update
+* Endpoint Name: Update
+* Description: User can join and leave event
+* Endpoint Type: POST
+* Endpoint: event\update
+* Parameters: Username (String), Event ID (Integer), Operation (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "username",
+  "event_id": 123,
+  "operation": "join"
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "status": "failure"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot join/leave
+  
+### Remove
+* Endpoint Name: Remove
+* Description: Host removes user from event, removes any votes from user
+* Endpoint Type: POST
+* Endpoint: event\remove
+* Parameters: Username (String), Event ID (Integer)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "username",
+  "event_id": 123
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "status": "failure"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Username not found, Event ID not found
+ 
+
+### Delete
+* Endpoint Name: Delete
+* Description: Checks if user is host, then deletes event
+* Endpoint Type: POST
+* Endpoint: event\delete
+* Parameters: Username (String), Event ID (Int)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "username",
+  "event_id": 123
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "status": "failure"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Username not found, Event ID not found
 
 
 
