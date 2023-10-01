@@ -106,6 +106,7 @@ or
     "eventid": 1,
     "name": "skiing",
     "host": "stephen",
+    "primary": "4/12/23",
     "dates": ["4/12/23", "4/14/23"],
     "participants": [
       "joseph",
@@ -115,6 +116,8 @@ or
   {
     "eventid": 2,
     "name": "movies",
+    "host": "stephen",
+    "primary": "4/12/23",
     "dates": ["4/01/23", "4/08/23"],
     "participants": [
       "joseph",
@@ -165,6 +168,7 @@ Error Handling:
    "eventid": 1,
    "name": "skiing",
    "host": "stephen",
+   "primary": "4/12/23",
    "dates": [
     "4/12/23",
     "4/14/23",
@@ -216,6 +220,7 @@ or
     "eventid": 1,
     "name": "skiing",
     "host": "stephen",
+    "primary": "4/12/23",
     "dates": ["4/12/23", "4/14/23"],
     "participants": [
       "joseph",
@@ -226,6 +231,7 @@ or
     "eventid": 2,
     "name": "movies",
     "host": "jason",
+    "primary": "4/01/23",
     "dates": ["4/01/23", "4/08/23"],
     "participants": [
       "joseph",
