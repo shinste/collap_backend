@@ -168,7 +168,7 @@ Error Handling:
    "dates": [
     "4/12/23",
     "4/14/23",
-   ]
+   ],
    "participants": [
     "joseph",
     "brandon",
