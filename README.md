@@ -193,7 +193,7 @@ or
   - 400: Missing Body Parameters, Username not found, Participant Username not found
 
 * Sequence Diagram
-![Alt text](./Sequence%20Diagram/Create%20Event%20SD.png)
+![Sequence Diagram](./Sequence%20Diagram/Create%20Event%20SD.png)
 
 ### Hosted Events
 * Endpoint Name: Hosted Events
