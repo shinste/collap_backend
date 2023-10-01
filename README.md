@@ -22,7 +22,7 @@ Features for our application that we plan to implement are as followed:
   - Suggest possible dates based on voting
   - Suggest dates that can work for the most people if full participation isn’t possible
 * Database
-  - SQL vs noSQL?
+  - SQL
 
 ## API Documentation
 ### Login
