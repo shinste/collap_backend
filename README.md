@@ -36,8 +36,8 @@ Features for our application that we plan to implement are as followed:
   - Request:
 ```
 {
-"username": "username",
-"password": "password"
+  "username": "username",
+  "password": "password"
 }
 ```
   - Response:
@@ -245,17 +245,21 @@ or
 
 ### Push Voting
 * Endpoint Name: Push Votes
-* Description: Hosted User can PUSH vote objectives onto participating users
+* Description: Hosted User can PUSH date voting onto participating users
 * Endpoint Type: POST
 * Endpoint: \push
-* Parameters: Event ID (Integer), Category (String)
+* Parameters: Event ID (Integer), Dates (String)
 * Return Type: JSON
 * Example Case:
   - Request:
 ```
 {
   "event_id": 123,
-  "category": "date"
+  "dates":[
+    "4/23/23",
+    "4/25/23",
+    "3/25/23
+  ]
 }
 ```
   - Response(s):
@@ -273,7 +277,7 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found
 
-### Voting
+### Vote
 * Endpoint Name: Vote
 * Description: Participants of an event can vote on preferred date
 * Endpoint Type: POST
@@ -286,10 +290,7 @@ or
 {
   "username": "username",
   "event_id": 123,
-  "date":[
-    "4/01/23",
-    "4/08/23",
-   ]
+  "date": "4/01/23"
 }
 ```
   - Response(s):
@@ -307,12 +308,12 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found
 
-### Update
-* Endpoint Name: Update
-* Description: User can join and leave event
+### Join
+* Endpoint Name: Join
+* Description: User can join event, updates eventDate table
 * Endpoint Type: POST
-* Endpoint: event\update
-* Parameters: Username (String), Event ID (Integer), Operation (String)
+* Endpoint: event\join
+* Parameters: Username (String), Event ID (Integer), Dates (String)
 * Return Type: JSON
 * Example Case:
   - Request:
@@ -320,7 +321,11 @@ or
 {
   "username": "username",
   "event_id": 123,
-  "operation": "join"
+  "dates":[
+    "4/23/23",
+    "4/25/23",
+    "3/25/23
+  ]
 }
 ```
   - Response(s):
@@ -337,6 +342,37 @@ or
 ```
 * Error Handling:
   - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot join/leave
+
+
+### Leave
+* Endpoint Name: Leave
+* Description: User can leave event, removes any votes from user
+* Endpoint Type: POST
+* Endpoint: event\update
+* Parameters: Username (String), Event ID (Integer)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "username",
+  "event_id": 123,
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "status": "failure"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot leave
   
 ### Remove
 * Endpoint Name: Remove
@@ -399,10 +435,86 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found, Event ID not found
 
+### Rank Dates
+* Endpoint Name: Rank
+* Description: Ranks dates by availabilities and includes who will be excluded from each date
+* Endpoint Type: GET
+* Endpoint: \rank
+* Parameters: Event ID (Int)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "event_id": 123
+}
+```
+  - Response(s):
+```
+{
+  "3/12/23":[
+  ],
+  "3/10/23": [
+    "joseph"
+  ],
+  "3/09/23": [
+    "joseph",
+    "brandon"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Event ID not found
 
+### Get Votes
+* Endpoint Name: Get Votes
+* Description: Shows all the dates listed for voting and their vote counts
+* Endpoint Type: GET
+* Endpoint: \get_votes
+* Parameters: Event ID (Int)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "event_id": 123
+}
+```
+  - Response(s):
+```
+{
+  "3/12/23": 5,
+  "3/10/23": 2,
+  "3/09/23": 1
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Event ID not found, Votes not found
 
+### Set Primary
 
-      
-  
-
-
+* Endpoint Name: Set Primary
+* Description: Sets the primary date
+* Endpoint Type: POST
+* Endpoint: \primary
+* Parameters: Event ID (Int), Date (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "event_id": 123,
+  "date": "4/13/23"
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "status": "failure"
+}
+```
