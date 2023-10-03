@@ -310,7 +310,7 @@ or
 
 ### Join
 * Endpoint Name: Join
-* Description: User can join event, updates eventDate table
+* Description: User can join event, updates eventDate table, removes from notifications
 * Endpoint Type: POST
 * Endpoint: event\join
 * Parameters: Username (String), Event ID (Integer), Dates (String)
@@ -342,6 +342,37 @@ or
 ```
 * Error Handling:
   - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot join/leave
+
+### Reject
+* Endpoint Name: Reject
+* Description: User can reject an event invite, removes from notifications
+* Endpoint Type: POST
+* Endpoint: event\reject
+* Parameters: Username (String), Event ID (Integer)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "username",
+  "event_id": 123
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "status": "failure"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot join/leave
+
 
 
 ### Leave
