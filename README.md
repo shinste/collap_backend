@@ -89,7 +89,7 @@ or
   - 400: Missing Body Parameters, Account already registered, Username already in use
 
 * Sequence Diagram: 
-![Registration](./Sequence%20Diagram/Registration.png)
+![Registration](./Sequence_Diagram/Registration.png)
 
 ### Events
 * Endpoint Name: View Events
@@ -203,7 +203,7 @@ or
   - 400: Missing Body Parameters, Username not found, Participant Username not found
 
 * Sequence Diagram
-![Sequence Diagram](./Sequence%20Diagram/Create%20Event%20SD.png)
+![Sequence Diagram](./Sequence_Diagram/Create%20Event.png)
 
 ### Hosted Events
 * Endpoint Name: Hosted Events
@@ -284,7 +284,7 @@ or
   - 400: Missing Body Parameters, Username not found
 
 * Sequence Diagram: 
-![Push Voting](./Sequence%20Diagram/Push%20Voting.png)
+![Push Voting](./Sequence_Diagram/Push%20Voting.png)
 
 ### Vote
 * Endpoint Name: Vote
@@ -318,7 +318,7 @@ or
   - 400: Missing Body Parameters, Username not found
   
 * Sequence Diagram: 
-![Vote](./Sequence%20Diagram/Voting.png)
+![Vote](./Sequence_Diagram/Voting.png)
 
 ### Join
 * Endpoint Name: Join
