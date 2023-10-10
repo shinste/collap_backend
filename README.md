@@ -55,7 +55,8 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found
 
-[!Login](./Sequence%20Diagram/Login%20.png)
+* Sequence Diagram: 
+![Login](./Sequence%20Diagram/Login%20.png)
 
 ### Registration
 * Endpoint Name: Registration
@@ -87,6 +88,7 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Account already registered, Username already in use
 
+* Sequence Diagram: 
 ![Registration](./Sequence%20Diagram/Registration.png)
 
 ### Events
@@ -281,6 +283,7 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found
 
+* Sequence Diagram: 
 ![Push Voting](./Sequence%20Diagram/Push%20Voting.png)
 
 ### Vote
@@ -313,7 +316,8 @@ or
 ```
 * Error Handling:
   - 400: Missing Body Parameters, Username not found
-
+  
+* Sequence Diagram: 
 ![Vote](./Sequence%20Diagram/Voting.png)
 
 ### Join
