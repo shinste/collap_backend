@@ -55,6 +55,8 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found
 
+[!Login](./Sequence%20Diagram/Login%20.png)
+
 ### Registration
 * Endpoint Name: Registration
 * Description: Creating a new user profile
@@ -84,6 +86,8 @@ or
 ```
 * Error Handling:
   - 400: Missing Body Parameters, Account already registered, Username already in use
+
+[!Registration](./Sequence%20Diagram/Registration.png)
 
 ### Events
 * Endpoint Name: View Events
@@ -277,6 +281,8 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found
 
+![Push Voting](./Sequence%20Diagram/Push%20Voting.png)
+
 ### Vote
 * Endpoint Name: Vote
 * Description: Participants of an event can vote on preferred date
@@ -307,6 +313,8 @@ or
 ```
 * Error Handling:
   - 400: Missing Body Parameters, Username not found
+
+[!Vote](./Sequence%20Diagram/Voting.png)
 
 ### Join
 * Endpoint Name: Join
