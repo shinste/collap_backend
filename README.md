@@ -56,7 +56,7 @@ or
   - 400: Missing Body Parameters, Username not found
 
 * Sequence Diagram: 
-![Login](./Sequence%20Diagram/Login%20.png)
+![Login](./Sequence_Diagram/Login%20.png)
 
 ### Registration
 * Endpoint Name: Registration
