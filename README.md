@@ -355,6 +355,12 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot join/leave
 
+
+* Sequence Diagram
+![Sequence Diagram](Sequence Diagram\JoinEventSD.png)
+
+
+
 ### Reject
 * Endpoint Name: Reject
 * Description: User can reject an event invite, removes from notifications
@@ -385,13 +391,15 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot join/leave
 
+* Sequence Diagram
+![Sequence Diagram](Sequence Diagram\RejectSD.png)
 
 
 ### Leave
 * Endpoint Name: Leave
-* Description: User can leave event, removes any votes from user
+* Description: Removes user from an event and removes any votes from that user, can be invoked by leaving user or host
 * Endpoint Type: POST
-* Endpoint: event\update
+* Endpoint: event\leave
 * Parameters: Username (String), Event ID (Integer)
 * Return Type: JSON
 * Example Case:
@@ -417,35 +425,8 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot leave
   
-### Remove
-* Endpoint Name: Remove
-* Description: Host removes user from event, removes any votes from user
-* Endpoint Type: POST
-* Endpoint: event\remove
-* Parameters: Username (String), Event ID (Integer)
-* Return Type: JSON
-* Example Case:
-  - Request:
-```
-{
-  "username": "username",
-  "event_id": 123
-}
-```
-  - Response(s):
-```
-{
-  "status": "success"
-}
-```
-or 
-```
-{
-  "status": "failure"
-}
-```
-* Error Handling:
-  - 400: Missing Body Parameters, Username not found, Event ID not found
+* Sequence Diagram
+![Sequence Diagram](Sequence Diagram\LeaveSD.png)
  
 
 ### Delete
@@ -478,6 +459,9 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found, Event ID not found
 
+* Sequence Diagram
+![Sequence Diagram](Sequence Diagram\DeleteSD.png)
+
 ### Rank Dates
 * Endpoint Name: Rank
 * Description: Ranks dates by availabilities and includes who will be excluded from each date
@@ -503,6 +487,7 @@ or
   "3/09/23": [
     "joseph",
     "brandon"
+  ]
 }
 ```
 * Error Handling:
@@ -533,6 +518,9 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Event ID not found, Votes not found
 
+  * Sequence Diagram
+![Sequence Diagram](Sequence Diagram\GetVotesSD.png)
+
 ### Set Primary
 
 * Endpoint Name: Set Primary
@@ -561,3 +549,5 @@ or
   "status": "failure"
 }
 ```
+  * Sequence Diagram
+![Sequence Diagram](Sequence Diagram\SetPrimarySD.png)
