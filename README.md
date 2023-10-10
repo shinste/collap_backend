@@ -87,7 +87,7 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Account already registered, Username already in use
 
-[!Registration](./Sequence%20Diagram/Registration.png)
+![Registration](./Sequence%20Diagram/Registration.png)
 
 ### Events
 * Endpoint Name: View Events
@@ -314,7 +314,7 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Username not found
 
-[!Vote](./Sequence%20Diagram/Voting.png)
+![Vote](./Sequence%20Diagram/Voting.png)
 
 ### Join
 * Endpoint Name: Join
