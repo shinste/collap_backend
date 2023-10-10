@@ -357,7 +357,7 @@ or
 
 
 * Sequence Diagram
-![Sequence Diagram](Sequence Diagram\JoinEventSD.png)
+![Sequence Diagram](./Sequence_Diagram/JoinEventSD.png)
 
 
 
@@ -392,8 +392,7 @@ or
   - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot join/leave
 
 * Sequence Diagram
-![Sequence Diagram](Sequence Diagram\RejectSD.png)
-
+![Sequence Diagram](./Sequence_Diagram/RejectSD.png)
 
 ### Leave
 * Endpoint Name: Leave
@@ -426,7 +425,7 @@ or
   - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot leave
   
 * Sequence Diagram
-![Sequence Diagram](Sequence Diagram\LeaveSD.png)
+![Sequence Diagram](./Sequence_Diagram/LeaveSD.png)
  
 
 ### Delete
@@ -460,7 +459,7 @@ or
   - 400: Missing Body Parameters, Username not found, Event ID not found
 
 * Sequence Diagram
-![Sequence Diagram](Sequence Diagram\DeleteSD.png)
+![Sequence Diagram](./Sequence_Diagram/DeleteSD.png)
 
 ### Rank Dates
 * Endpoint Name: Rank
@@ -493,6 +492,9 @@ or
 * Error Handling:
   - 400: Missing Body Parameters, Event ID not found
 
+* Sequence Diagram
+![Sequence Diagram](./Sequence_Diagram/RankSD.png)
+
 ### Get Votes
 * Endpoint Name: Get Votes
 * Description: Shows all the dates listed for voting and their vote counts
@@ -519,7 +521,7 @@ or
   - 400: Missing Body Parameters, Event ID not found, Votes not found
 
   * Sequence Diagram
-![Sequence Diagram](Sequence Diagram\GetVotesSD.png)
+![Sequence Diagram](./Sequence_Diagram/GetVotesSD.png)
 
 ### Set Primary
 
@@ -550,4 +552,4 @@ or
 }
 ```
   * Sequence Diagram
-![Sequence Diagram](Sequence Diagram\SetPrimarySD.png)
+![Sequence Diagram](./Sequence_Diagram/SetPrimarySD.png)
