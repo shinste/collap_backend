@@ -23,10 +23,7 @@ class user(models.Model):
 
 class Event(models.Model):
     event_id = models.CharField(max_length=8, primary_key=True, default=uuid.uuid4, unique=True)
-    #unique=True
-    #i made primary_date its own field because of circular dependency, might try to resolve this later
     primary_date = models.DateField()
-    # primary_date = models.ForeignKey(EventDate, on_delete=models.CASCADE, to_field='date', related_name='primary_date')
     name = models.CharField(max_length=100)
     host = models.ForeignKey(user, on_delete=models.CASCADE)
     def __str__(self):
@@ -44,10 +41,15 @@ class EventDate(models.Model):
 
 
 class UserEvent(models.Model):
-    event_id = models.ForeignKey(Event, on_delete=models.CASCADE, primary_key=True)
-    username = models.CharField(max_length=100)
-    
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+    username = models.ForeignKey(user, on_delete=models.CASCADE)
+
     class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['event_id', 'username'], name='unique_userevent')
+        ]
+
+    # class Meta:
         unique_together = ('event_id', 'username')
 
     def __str__(self):
@@ -80,50 +82,7 @@ class Notification(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['event_id', 'username', 'notification'], name='unique_notification')
         ]
-    # class Meta:
-    #     unique_together = ('event_id', 'username', 'notification')
 
     def __str__(self):
         return str(self.event_id) + str(self.username)
 
-
-
-
-
-
-
-
-
-
-
-# class User(models.Model):
-#     username = models.CharField(max_length=100)
-#     password = models.CharField(max_length=100)
-
-#     def __str__(self):
-#         return self.username
-    
-# # class EventDate(models.Model):
-# #     date = models.DateField()
-    
-# #     def __str__(self):
-# #         return str(self.date)
-    
-# class Event(models.Model):
-#     # dates = models.ManyToManyField('EventDate', blank=True)
-#     # host = 
-#     name = models.CharField(max_length=100)
-#     proposed_date = models.DateField()
-#     date_created = models.DateTimeField(auto_now_add=True)
-#     participants = models.ManyToManyField(User)
-#     num_participants = models.IntegerField(null=False, default=0)
-#     def __str__(self):
-#         return self.name
-#     def participant_count(self):
-#         return self.participants.count()
-#     # def save(self, *args, **kwargs):
-#     #     self.num_participants = self.participants.count()
-#     #     super().save(*args, **kwargs)
-# # def update_num_participants(sender, instance, **kwargs):
-# #     instance.num_participants = instance.participants.count()
-# #     instance.save()
