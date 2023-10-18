@@ -81,7 +81,6 @@ class Notification(models.Model):
     event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
     username = models.ForeignKey(user, on_delete=models.CASCADE)
     notification = models.CharField(max_length=500)
-    
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['event_id', 'username', 'notification'], name='unique_notification')
