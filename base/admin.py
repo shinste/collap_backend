@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, user, EventDate, UserEvent, Vote, Notification, Availability
+from .models import Event, user, EventDate, EventUser, Vote, Notification, Availability
 # Register your models here.
 
 
@@ -9,7 +9,7 @@ admin.site.register(user)
 
 admin.site.register(EventDate)
 
-admin.site.register(UserEvent)
+admin.site.register(EventUser)
 
 admin.site.register(Vote)
 
