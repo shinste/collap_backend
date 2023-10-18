@@ -134,6 +134,7 @@ class CreateEvent(CreateAPIView):
                     return JsonResponse({'error': "Date Input Error!"}, status=400)
                 date_serializer.save()
         except Exception as e:
+            # talk to brandon about deleting
             user_instance.delete()
             event_instance.delete()
             notification_instance.delete()
