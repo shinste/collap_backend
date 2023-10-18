@@ -5,12 +5,12 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.Homepage, name="homepage"),
+    path('', views.homepage, name="homepage"),
     path('admin/', admin.site.urls),
-    path('event/view/', EventView.as_view(), name="event"),
-    path('notification/', views.NotificationView , name="notifications"),
+    path('event/view/', EventView.as_view(), name="event view"),
+    path('notification/', views.notification_view , name="notifications"),
     path('register/', Register.as_view(), name="register"),
-    path('hosted/', views.HostedEvents, name="hosted events"),
-    path('ranked/', views.RankDates, name="rank")
-    # path('event/create/', CreateEvent.as_view(), name="event")
+    path('hosted/', views.hosted_events, name="hosted events"),
+    path('ranked/', views.rank_dates, name="rank"),
+    path('event/create/', CreateEvent.as_view(), name="create event")
 ]
