@@ -43,7 +43,7 @@ def ViewEvents(request):
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     name = json_data.get('username')
-    events = UserEvent.objects.filter(username=name).values()
+    events = EventUser.objects.filter(username=name).values()
     return JsonResponse(list(events), safe=False, status=200)
 
 def GetVotes(request):
