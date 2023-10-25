@@ -99,6 +99,7 @@ class joinEvent(CreateAPIView):
         else:
             return JsonResponse({'error': "Invalid dates structure"})
 
+        delete_notif = Event.objects.get(pk=event.pk).delete()
         return JsonResponse({'status': 'Success'}, status=200)
 
 class pushVote(CreateAPIView):
