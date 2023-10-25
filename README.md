@@ -16,13 +16,13 @@ Features for our application that we plan to implement are as followed:
   - Cancel event
   - Vote on event
 * Push Objectives
-  - Pushing voting objectives on participants of an event
+  - Pushing voting objectives on dates of an event
   - Anonymous Voting
 * Conflict System
   - Suggest possible dates based on voting
   - Suggest dates that can work for the most people if full participation isn’t possible
 * Database
-  - SQL
+  - SQLite
 
 ## API Documentation
 ### Login
@@ -123,8 +123,8 @@ or
     "eventid": 2,
     "name": "movies",
     "host": "stephen",
-    "primary": "4/12/23",
-    "dates": ["4/01/23", "4/08/23"],
+    "primary": "2023-04-12",
+    "dates": ["2023-04-01", "2023-08-01"],
     "participants": [
       "joseph",
       "brandon"
@@ -228,8 +228,8 @@ or
     "eventid": 1,
     "name": "skiing",
     "host": "stephen",
-    "primary": "4/12/23",
-    "dates": ["4/12/23", "4/14/23"],
+    "primary": "2023-04-12",
+    "dates": ["2023-04-12", "2023-04-14"],
     "participants": [
       "joseph",
       "brandon"
@@ -239,8 +239,8 @@ or
     "eventid": 2,
     "name": "movies",
     "host": "jason",
-    "primary": "4/01/23",
-    "dates": ["4/01/23", "4/08/23"],
+    "primary": "2023-04-01",
+    "dates": ["2023-04-01", "2023-04-08"],
     "participants": [
       "joseph",
       "brandon"
@@ -264,9 +264,9 @@ or
 {
   "event_id": 123,
   "dates":[
-    "4/23/23",
-    "4/25/23",
-    "3/25/23
+    "2023-04-23",
+    "2023-04-25",
+    "2023-04-21"
   ]
 }
 ```
@@ -301,7 +301,7 @@ or
 {
   "username": "username",
   "event_id": 123,
-  "date": "4/01/23"
+  "date": "2023-04-01"
 }
 ```
   - Response(s):
@@ -324,7 +324,7 @@ or
 
 ### Join
 * Endpoint Name: Join
-* Description: User can join event, updates eventDate table, removes from notifications
+* Description: User can join event, updates eventDate table, inserts into availability table, removes from notifications table
 * Endpoint Type: POST
 * Endpoint: event\join
 * Parameters: Username (String), Event ID (Integer), Dates (String)
@@ -336,9 +336,9 @@ or
   "username": "username",
   "event_id": 123,
   "dates":[
-    "4/23/23",
-    "4/25/23",
-    "3/25/23
+    "2023-04-05",
+    "2023-04-10",
+    "2023-04-15"
   ]
 }
 ```
@@ -480,12 +480,12 @@ or
   - Response(s):
 ```
 {
-  "3/12/23":[
+  "2023-04-25":[
   ],
-  "3/10/23": [
+  "2023-04-20": [
     "joseph"
   ],
-  "3/09/23": [
+  "2023-04-29": [
     "joseph",
     "brandon"
   ]
@@ -514,9 +514,9 @@ or
   - Response(s):
 ```
 {
-  "3/12/23": 5,
-  "3/10/23": 2,
-  "3/09/23": 1
+  "2023-03-12": 5,
+  "2023-03-25": 2,
+  "2023-04-01": 1
 }
 ```
 * Error Handling:
@@ -538,7 +538,7 @@ or
 ```
 {
   "event_id": 123,
-  "date": "4/13/23"
+  "date": "2023-04-13"
 }
 ```
   - Response(s):
