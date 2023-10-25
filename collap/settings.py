@@ -61,7 +61,6 @@ REST_FRAMEWORK = {
 }
 
 ROOT_URLCONF = 'collap.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

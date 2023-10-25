@@ -6,32 +6,33 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
-class EventUser(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = user
         fields = '__all__'
 
-class EventVote(serializers.ModelSerializer):
+class EventVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vote
         fields = '__all__'
 
-class EventUserEvent(serializers.ModelSerializer):
+class EventUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserEvent
         fields = '__all__'
 
-class EventNotifications(serializers.ModelSerializer):
+class EventNotificationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = '__all__'
 
-class EventAvailability(serializers.ModelSerializer):
+class EventAvailabilitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Availability
         fields = '__all__'
 
-class EventEventData(serializers.ModelSerializer):
+class EventDateSerializer(serializers.ModelSerializer):
+    date = serializers.DateField(format='%Y-%m-%d')
     class Meta:
         model = EventDate
         fields = '__all__'
@@ -40,6 +41,3 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = '__all__'
-
-
-
