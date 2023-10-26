@@ -74,7 +74,7 @@ class joinEvent(CreateAPIView):
 
         user_event_data = {
             'username': user_data,
-            'event_id': event
+            'event_id': event_id_data
         }
 
         # Create the UserEvent
@@ -84,22 +84,36 @@ class joinEvent(CreateAPIView):
         else:
             return JsonResponse(user_event_serializer.errors, status=400)
 
-        event_name = event.name
+
         if date_data is not None:
             for date in date_data:
-                temp_date_data = {
-                    'event_id': event_name,
+                if (EventDate.objects.filter(event_id=event_id_data).first()):
+                    temp_date_data = {
+                        'event_id': event_id_data,
+                        'date': date
+                    }
+                    event_date_serializer = EventDateSerializer(data=temp_date_data)
+                    if event_date_serializer.is_valid():
+                        event_date_serializer.save()
+                    else:
+                        return JsonResponse(event_date_serializer.errors, status=400)
+                if(Availability.objects.filter(date=date).exists()):
+                    continue
+                availability_data = {
+                    'event_id': event_id_data,
+                    'username': user_data,
                     'date': date
                 }
-                event_date_serializer = EventDateSerializer(data=temp_date_data)
-                if event_date_serializer.is_valid():
-                    event_date_serializer.save()
+                availability_date_serializer = EventAvailabilitySerializer(data=availability_data)
+                if availability_date_serializer.is_valid():
+                    availability_date_serializer.save()
                 else:
-                    return JsonResponse(event_date_serializer.errors, status=400)
+                    return JsonResponse(availability_date_serializer.errors, status=400)
         else:
             return JsonResponse({'error': "Invalid dates structure"})
 
-        delete_notif = Event.objects.get(pk=event.pk).delete()
+        # Deletes event from notification table
+        # Event.objects.get(pk=event.pk).delete()
         return JsonResponse({'status': 'Success'}, status=200)
 
 class pushVote(CreateAPIView):
