@@ -29,15 +29,21 @@ class Event(models.Model):
     def __str__(self):
         return self.name
     
+    
 class EventDate(models.Model):
-    event_id = models.ForeignKey(Event, on_delete=models.CASCADE, primary_key=True)
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
     date = models.DateField()
     
     class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['event_id', 'date'], name='unique_event_date')
+        ]
+        
         unique_together = ('event_id', 'date')
 
     def __str__(self):
         return str(self.event_id) + str(self.date)
+
 
 
 class UserEvent(models.Model):

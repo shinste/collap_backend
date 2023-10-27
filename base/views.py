@@ -6,8 +6,6 @@ from django.http import HttpResponse, JsonResponse
 import json
 from django.db.models import Count
 
-
-
 class EventView(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
@@ -65,12 +63,13 @@ class joinEvent(CreateAPIView):
         event_id_data = data.get('event_id')
         date_data = data.get('dates')
 
-        # Ensure the event_id_data exists
         try:
-            event = Event.objects.get(event_id= event_id_data)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=400)
+            event = Event.objects.get(event_id=event_id_data)
+            event_name = event.name
+        except Event.DoesNotExist:
+            return JsonResponse({'error': 'Event not found'}, status=404)
 
+       
 
         user_event_data = {
             'username': user_data,
@@ -84,37 +83,38 @@ class joinEvent(CreateAPIView):
         else:
             return JsonResponse(user_event_serializer.errors, status=400)
 
-
-        if date_data is not None:
-            for date in date_data:
-                if (EventDate.objects.filter(event_id=event_id_data).first()):
-                    temp_date_data = {
-                        'event_id': event_id_data,
-                        'date': date
-                    }
-                    event_date_serializer = EventDateSerializer(data=temp_date_data)
-                    if event_date_serializer.is_valid():
-                        event_date_serializer.save()
-                    else:
-                        return JsonResponse(event_date_serializer.errors, status=400)
-                if(Availability.objects.filter(date=date).exists()):
-                    continue
-                availability_data = {
+        for date in date_data:
+            if EventDate.objects.filter(event_id=event_id_data, date=date).exists():
+                pass
+            else:
+                temp_date_data = {
                     'event_id': event_id_data,
-                    'username': user_data,
                     'date': date
                 }
-                availability_date_serializer = EventAvailabilitySerializer(data=availability_data)
-                if availability_date_serializer.is_valid():
-                    availability_date_serializer.save()
+                event_date_serializer = EventDateSerializer(data=temp_date_data)
+                if event_date_serializer.is_valid():
+                    event_date_serializer.save()
                 else:
-                    return JsonResponse(availability_date_serializer.errors, status=400)
-        else:
-            return JsonResponse({'error': "Invalid dates structure"})
+                    return JsonResponse(event_date_serializer.errors, status=400)
 
-        # Deletes event from notification table
-        # Event.objects.get(pk=event.pk).delete()
-        return JsonResponse({'status': 'Success'}, status=200)
+            if Availability.objects.filter(event_id=event_id_data, username=user_data, date=date).exists():
+                continue
+            availability_data = {
+                'event_id': event_id_data,
+                'username': user_data,
+                'date': date
+            }
+
+            availability_date_serializer = EventAvailabilitySerializer(data=availability_data)
+            if availability_date_serializer.is_valid():
+                availability_date_serializer.save()
+            else:
+                return JsonResponse(availability_date_serializer.errors, status=400)
+
+        if Notification.objects.filter(event_id=event_id_data, username=user_data).exists():
+            notification_to_delete = Notification.objects.get(event_id=event_id_data, username=user_data)
+            notification_to_delete.delete()
+        return JsonResponse({'status': 'success'}, status=200)
 
 class pushVote(CreateAPIView):
     queryset = Notification.objects.all()
