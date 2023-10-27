@@ -171,18 +171,20 @@ Error Handling:
   - Request:
 ```
 {
-   "eventid": 1,
-   "name": "skiing",
-   "host": "stephen",
-   "primary": "4/12/23",
-   "dates": [
-    "4/12/23",
-    "4/14/23",
-   ],
-   "participants": [
-    "joseph",
-    "brandon",
-   ]
+    "event": {
+        "name": "testvaliddatesecondtry",
+        "host": "shinste",
+        "primary_date": "2023-03-23"
+    },
+    "user": [
+        "kendrick",
+        "joseph"
+        ],
+    "date": [
+        "2023-08-23",
+        "2023-11-23",
+        "2023-03-23"
+    ]
 }
 ```
   - Response:
