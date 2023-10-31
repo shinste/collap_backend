@@ -6,3 +6,5 @@ def json_load(request):
         json_data = json.loads(request.body.decode('utf-8'))
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    
+    return json_data

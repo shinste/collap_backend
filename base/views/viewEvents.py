@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from .constant.json_load import json_load
 
 def viewEvents(request):
-    json_load()
+    json_data = json_load(request)
 
     username = json_data.get('username')
 
