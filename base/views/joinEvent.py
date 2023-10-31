@@ -2,7 +2,6 @@ from rest_framework.generics import CreateAPIView
 from ..models import *
 from ..serializers import *
 from django.http import JsonResponse
-import json
 
 class joinEvent(CreateAPIView):
 

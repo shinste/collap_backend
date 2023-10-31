@@ -1,13 +1,10 @@
 from django.http import JsonResponse
-import json
 from django.db.models import Count
 from ..models import *
+from .constant.json_load import json_load
 
 def getVotes(request):
-    try:
-        json_data = json.loads(request.body.decode('utf-8'))
-    except json.JSONDecodeError:
-        return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    json_load()
 
     event_id = json_data.get('event_id')
 

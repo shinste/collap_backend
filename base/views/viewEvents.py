@@ -1,13 +1,10 @@
 from ..models import *
 from django.http import JsonResponse
-import json
-
+from .constant.json_load import json_load
 
 def viewEvents(request):
-    try:
-        json_data = json.loads(request.body.decode('utf-8'))
-    except json.JSONDecodeError:
-        return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    json_load()
+
     username = json_data.get('username')
 
     # Filter UserEvent objects by username to get associated event_ids
