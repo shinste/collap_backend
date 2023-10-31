@@ -1,2 +1,4 @@
+# Ignore pycache
 /base/_pycache_
 /base/views/_pycache_
+/base/views/constant/_pycache_
