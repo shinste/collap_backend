@@ -17,5 +17,7 @@ urlpatterns = [
     path('notification/', views.notification_view, name="notifications"),
     path('user/view_events/', views.ViewEvents, name='view_events'),
     path('event/get_votes/', views.GetVotes, name="get_votes"),
-    path('vote/', Voting.as_view(), name="vote")
+    path('vote/', Voting.as_view(), name="vote"),
+    path('primary/', PrimaryDate.as_view(), name="set primary"),
+    path('event/leave/', LeaveEvent.as_view(), name="leave")
 ]

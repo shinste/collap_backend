@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 import json
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_protect
-import datetime
+from datetime import datetime
 # API View of Events
 class EventView(generics.ListCreateAPIView):
     queryset = Event.objects.all()
@@ -214,6 +214,63 @@ class Voting(CreateAPIView):
         notification_instance.delete()
         return JsonResponse({'status': 'success'}, status=200)
         
-            
+class PrimaryDate(CreateAPIView):
+    def create(self, request, *args, **kwargs):
+        # Extracting data from request and checking missing information
+        try:
+            entire_data = request.data
+            event_id = entire_data["event_id"]
+            date = entire_data["date"]
+        except:
+            return JsonResponse({'error':'Missing Input'}, status=400)
+        try:
+            event = Event.objects.get(event_id = event_id)
+        except:
+            # Code below should theoretically never run but just in case
+            return JsonResponse({'error':'No Event with this ID'}, status=400)
         
+        # If primary date is the same as the proposed date, let user know
+        date_check = datetime.strptime(date, "%Y-%m-%d").date()
+        if date_check == event.primary_date:
+            return JsonResponse({"error": "This was already the Primary Date for this Event"}, status=400)
+        
+        event.primary_date = date
+        event.save()
+        return JsonResponse({"status": 'success'}, status=200)
     
+class LeaveEvent(CreateAPIView):
+    def create(self, request, *args, **kwargs):
+        #needs to remove from EventUser, Vote, Availability
+        # Extracting data from request and checking missing information
+        try: 
+            entire_data = request.data
+            event_id = entire_data['event_id']
+            username = entire_data['username']
+        except:
+            return JsonResponse({'error':'Missing Input'}, status=400)
+
+        # PreCheck: check if the participant is the host
+        event = Event.objects.filter(event_id=event_id).first()
+        if username == str(event.host):
+            return JsonResponse({'error':'The Host cannot leave the Event, Try deleting the Event instead!'}, status=400)
+        
+        # Precheck: see if the user is actually in that event before removing
+        participants = EventUser.objects.filter(event_id=event_id).values_list('username', flat=True)
+        if username not in participants:
+            return JsonResponse({'error':'Participant already not in Event'}, status=400)
+        
+        # Remove from EventUser
+        delete_eventuser = EventUser.objects.filter(event_id=event_id, username=username).first()
+        delete_eventuser.delete()
+        
+        # Remove from Vote
+        user_votes = Vote.objects.filter(event_id=event_id, username=username)
+        user_votes.delete()
+        
+        # Remove from Availability
+        user_availabilities = Availability.objects.filter(event_id=event_id, username=username)
+        user_availabilities.delete()
+        return JsonResponse({"status":"success"}, status=200)
+        
+        
+        
