@@ -1,0 +1,13 @@
+from models import *
+from serializers import *
+from django.http import JsonResponse
+import json
+
+def notification_view(request):
+    try: 
+        json_data = json.loads(request.body.decode('utf-8'))
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    name = json_data.get('username')
+    notifs = Notification.objects.filter(username=name).values()
+    return JsonResponse(list(notifs), safe=False, status=200)
