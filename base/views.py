@@ -41,15 +41,6 @@ def login(request):
         return JsonResponse({'status': 'success'}, status=200)
     return JsonResponse({'error': 'Incorrect Password'}, status=400)
 
-    # Invalid credentials, handle accordingly
-        # username = request.POST['username']
-        # password = request.POST['password']
-        # user = authenticate (username = username, password = password)
-        # if user is not None:
-        #     login(request, user)
-        #     return ('home')
-        # else:
-        #     return JsonResponse({'error': 'Invalid username or password.'})
 
 # Get Request that shows all the events that a user is participating
 def ViewEvents(request):
