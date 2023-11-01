@@ -36,8 +36,6 @@ def login(request):
         username = json_data.get('username')
         password = user.objects.filter(username=username).values_list('password', flat=True).first()
     except Exception as e:
-        return JsonResponse({'error': str(e)}, status=400)
-
         return JsonResponse({'error': 'Username not found'}, status=400)
     if json_data.get('password') == password:
         return JsonResponse({'status': 'success'}, status=200)
@@ -57,20 +55,19 @@ def login(request):
 def ViewEvents(request):
     try:
         json_data = json.loads(request.body.decode('utf-8'))
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=400)
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     name = json_data.get('username')
     events = EventUser.objects.filter(username=name).values_list('event_id', flat=True)
     participated_events = []
-    for id in events:
-        temp = list(Event.objects.filter(event_id = id).values())
-        participants = list(EventUser.objects.filter(event_id=id).values_list('username', flat=True))
+    for participating_id in events:
+        temp = list(Event.objects.filter(event_id = participating_id).values())
+        participants = list(EventUser.objects.filter(event_id=participating_id).values_list('username', flat=True))
         temp[0]["participants"] = participants
         participated_events.append(temp[0])
     return JsonResponse(participated_events, safe=False, status=200)
 
+# Get Request that lists the votes for that event
 def GetVotes(request):
     try:
         json_data = json.loads(request.body.decode('utf-8'))
@@ -206,6 +203,7 @@ class CreateEvent(CreateAPIView):
         return JsonResponse({'status': 'Success'}, status=200)
 
     
+# Post Request that records a user's vote on a date
 class Voting(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # Extracting data from request and checking missing information
@@ -238,6 +236,7 @@ class Voting(CreateAPIView):
         notification_instance.delete()
         return JsonResponse({'status': 'success'}, status=200)
         
+# Post Request that changes the primary date of an event, only done by host
 class PrimaryDate(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # Extracting data from request and checking missing information
@@ -262,6 +261,7 @@ class PrimaryDate(CreateAPIView):
         event.save()
         return JsonResponse({"status": 'success'}, status=200)
     
+#Post Request that removes a person from an event
 class LeaveEvent(CreateAPIView):
     def create(self, request, *args, **kwargs):
         #needs to remove from EventUser, Vote, Availability
@@ -296,6 +296,7 @@ class LeaveEvent(CreateAPIView):
         user_availabilities.delete()
         return JsonResponse({"status":"success"}, status=200)
     
+# Post Request that rejects an invite to join an event
 class Reject(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # Extracting data from request and checking missing information
@@ -311,6 +312,7 @@ class Reject(CreateAPIView):
         notification_instance.delete()
         return JsonResponse({"status":"success"}, status=200)
 
+# Post Request that deletes an event entirely
 class Delete(CreateAPIView):
     def create(self, request, *args, **kwargs):
         try:

@@ -68,3 +68,4 @@ class NotificationTest(TestCase):
         # response = notification_view(testrequest)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(user.objects.filter(username='notification').exists())
+        sdfsdfds
