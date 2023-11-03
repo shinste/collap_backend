@@ -3,7 +3,7 @@ from ..models import *
 from ..serializers import *
 from django.http import JsonResponse
 
-class joinEvent(CreateAPIView):
+class JoinEvent(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         # Extract data from the request
@@ -17,7 +17,6 @@ class joinEvent(CreateAPIView):
             event = Event.objects.get(event_id=event_id_data)
             event_name = event.name
         except Event.DoesNotExist:
-            # If the event does not exist, return an error response
             return JsonResponse({'error': 'Event not found'}, status=404)
 
         user_event_data = {
@@ -30,19 +29,18 @@ class joinEvent(CreateAPIView):
         if user_event_serializer.is_valid():
             user_event_serializer.save()
         else:
-            # If there are errors in the serializer, return a response with the errors
             return JsonResponse(user_event_serializer.errors, status=400)
 
         for date in date_data:
             if EventDate.objects.filter(event_id=event_id_data, date=date).exists():
-                # If the EventDate already exists, continue to the next date
+                # If the EventDate already exists, continue on to add availbility operation
                 pass
             else:
-                temp_date_data = {
+                current_date_data = {
                     'event_id': event_id_data,
                     'date': date
                 }
-                event_date_serializer = EventDateSerializer(data=temp_date_data)
+                event_date_serializer = EventDateSerializer(data=current_date_data)
                 if event_date_serializer.is_valid():
                     event_date_serializer.save()
                 else:

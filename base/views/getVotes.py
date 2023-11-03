@@ -3,7 +3,7 @@ from django.db.models import Count
 from ..models import *
 from .constant.json_load import json_load
 
-def getVotes(request):
+def get_votes(request):
     json_data = json_load(request)
 
     event_id = json_data.get('event_id')
