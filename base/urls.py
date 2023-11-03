@@ -1,26 +1,33 @@
 from django.urls import path
-from .views import *
+from .views.createevent import CreateEvent
+from .views.delete import Delete
+from .views.homepage import Homepage
+from .views.hostedevents import HostedEvents
+from .views.leaveevent import LeaveEvent
+from .views.login import Login
+from .views.notificationview import NotificationView
+from .views.primarydate import PrimaryDate
+from .views.rankdates import RankDates
+from .views.register import Register
+from .views.reject import Reject
+from .views.viewevents import ViewEvents
+from .views.voting import Voting
 from django.contrib import admin
-from . import views
-
 
 urlpatterns = [
-    path('', views.homepage, name="homepage"),
+    path('', Homepage.as_view(), name="homepage"),
     path('admin/', admin.site.urls),
-    path('event/view/', views.ViewEvents, name="event view"),
-    path('notification/', views.notification_view , name="notifications"),
+    path('event/view/', ViewEvents.as_view(), name="event view"),
+    path('notification/', NotificationView.as_view() , name="notifications"),
     path('register/', Register.as_view(), name="register"),
-    path('hosted/', views.hosted_events, name="hosted events"),
-    path('ranked/', views.rank_dates, name="rank"),
+    path('hosted/', HostedEvents.as_view(), name="hosted events"),
+    path('ranked/', RankDates.as_view(), name="rank"),
     path('event/create/', CreateEvent.as_view(), name="create event"),
-    # path('event/view/', EventView.as_view(), name="event"),
-    path('notification/', views.notification_view, name="notifications"),
-    path('user/view_events/', views.ViewEvents, name='view_events'),
-    path('event/get_votes/', views.GetVotes, name="get_votes"),
+    path('notification/', NotificationView.as_view(), name="notifications"),
     path('vote/', Voting.as_view(), name="vote"),
     path('primary/', PrimaryDate.as_view(), name="set primary"),
     path('event/leave/', LeaveEvent.as_view(), name="leave"),
-    path('login/', views.login, name='login'),
+    path('login/', Login.as_view(), name='login'),
     path('reject/', Reject.as_view(), name='reject'),
     path('event/delete/', Delete.as_view(), name='delete')
 ]
