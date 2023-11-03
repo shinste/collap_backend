@@ -6,7 +6,7 @@ from .views.pushVote import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('event/get_votes/', getVotes, name="get_votes"),
-    path('event/join_event/', joinEvent.as_view(), name="join_event"),
-    path('event/push_vote/', pushVote.as_view(), name ="push_vote")
+    path('event/get_votes/', get_votes, name="get_votes"),
+    path('event/join_event/', JoinEvent.as_view(), name="join_event"),
+    path('event/push_vote/', PushVote.as_view(), name ="push_vote")
 ]

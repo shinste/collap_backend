@@ -2,7 +2,6 @@
 __pycache__/
 *.py[cod]
 
-base/migrations/*
 # C extensions
 *.so
 

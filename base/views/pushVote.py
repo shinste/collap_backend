@@ -1,6 +1,6 @@
 from rest_framework.generics import CreateAPIView
 from ..serializers import *
 
-class pushVote(CreateAPIView):
+class PushVote(CreateAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
