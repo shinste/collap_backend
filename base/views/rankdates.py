@@ -2,6 +2,8 @@ from rest_framework.generics import ListAPIView
 from django.http import JsonResponse
 from ..models import Availability
 
+# Get Request that ranks the possible dates for an event and shows who is excluded from
+# each date
 class RankDates(ListAPIView):
     def list(self, request, *args, **kwargs):
         event_id = request.GET.get('event_id')

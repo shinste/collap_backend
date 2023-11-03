@@ -7,6 +7,7 @@ class RegistrationTest(APITestCase):
             "username": "success",
             "password": "success"
         }
+        
     def test_registration_success(self):
         
         response = self.client.post('/register/', self.data)

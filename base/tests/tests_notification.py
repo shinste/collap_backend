@@ -8,6 +8,7 @@ class NotificationTest(APITestCase):
                                               name= "testname",
                                               primary_date= "2023-03-23",
                                               host= self.user)
+        
     def test_notification_failure(self):
         response = self.client.get('/notification/', data={"username": "notification"})
         self.assertEqual(response.status_code, 200)

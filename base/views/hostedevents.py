@@ -2,6 +2,7 @@ from rest_framework.generics import ListAPIView
 from django.http import JsonResponse
 from ..models import Event
 
+# Get Request that returns the events that a user is currently hosting
 class HostedEvents(ListAPIView):
     def list(self, request, *args, **kwargs):
         username = request.GET.get('username')

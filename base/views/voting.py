@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from ..models import Notification, EventUser, Event
 from ..serializers import EventVoteSerializer
 
-
+# Post Request that creates voting records from a user that is prompted to vote
 class Voting(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # Extracting data from request and checking missing information

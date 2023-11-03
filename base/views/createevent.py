@@ -4,7 +4,7 @@ from ..models import Event, user
 from ..serializers import EventSerializer, EventUserSerializer, NotificationSerializer, EventDateSerializer
 from datetime import datetime
 
-
+# Post Request that creates an event, invites participants, adds available dates
 class CreateEvent(CreateAPIView):
     serializer_class = EventSerializer
 

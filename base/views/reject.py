@@ -2,8 +2,7 @@ from rest_framework.generics import CreateAPIView
 from django.http import JsonResponse
 from ..models import Notification
 
-
-
+#Post Request that rejects an invite to an event and removes the notification
 class Reject(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # Extracting data from request and checking missing information
