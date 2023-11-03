@@ -1,8 +1,8 @@
 from django.urls import path
 from django.contrib import admin
-from .views.getVotes import *
-from .views.joinEvent import *
-from .views.pushVote import *
+from .views.getVotes import get_votes
+from .views.joinEvent import JoinEvent
+from .views.pushVote import PushVote
 
 urlpatterns = [
     path('admin/', admin.site.urls),
