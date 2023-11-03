@@ -18,17 +18,26 @@ def homepage(request):
     return HttpResponse("Temporary Home Page")
 
 #Get Request that returns the notifications that a user has
+# def notification_view(request):
+#     try: 
+#         json_data = json.loads(request.body.decode('utf-8'))
+#     except Exception as e:
+#         return JsonResponse({'error': str(e)}, status=400)
+#     except json.JSONDecodeError:
+#         return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+#     name = json_data.get('username')
+#     notifs = Notification.objects.filter(username=name).values()
+#     return JsonResponse(list(notifs), safe=False, status=200)
 def notification_view(request):
-    try: 
-        json_data = json.loads(request.body.decode('utf-8'))
-    except json.JSONDecodeError:
+    name = request.GET.get('username')
+    if name is None:
         return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-    name = json_data.get('username')
+
     notifs = Notification.objects.filter(username=name).values()
     return JsonResponse(list(notifs), safe=False, status=200)
 
 def login(request):
-    try: 
+    try:
         json_data = json.loads(request.body.decode('utf-8'))
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid JSON data'}, status=400)
@@ -120,7 +129,10 @@ class CreateEvent(CreateAPIView):
             user_data = entire_data.get('user')
             date_data = entire_data.get('date')
         except:
-            return JsonResponse({"status": "Missing Input"}, status=400)
+            return JsonResponse({"error": "Invalid Format"}, status=400)
+        
+        if not event_data or not user_data or not date_data:
+            return JsonResponse({"error": "Missing Information"}, status=400)
 
         # Precheck: checks to see if any other event has the same name before proceeding
         all_events = list(Event.objects.filter(host=event_data["host"]).values_list('name', flat=True))
@@ -139,14 +151,15 @@ class CreateEvent(CreateAPIView):
                 return JsonResponse({'error': 'User(s) Not Found!'}, status=400)
 
         # Precheck: if date given is in right format
-        for date in date_data:
+        for curr_date in date_data:
             try: 
-                datetime.date.fromisoformat(date)
-            except:
+                datetime.fromisoformat(curr_date)
+            except Exception as e:
                 return JsonResponse({'error': "Date Input Error!"}, status=400)
 
         # Creation of Event
         event_instance = event_serializer.save()
+        
         
         # Adding host as sole participant in event
         host_model = {
@@ -154,12 +167,14 @@ class CreateEvent(CreateAPIView):
                 'username' : event_data["host"]
             }
         host_instance = EventUserSerializer(data=host_model)
+        
+        
         if host_instance.is_valid():
             host_instance.save()
         else:
             # Code below should theoretically never run but just in case
             event_instance.delete()
-            return JsonResponse({'error': 'Host User Not Found!'}, status=400)
+            return JsonResponse({'error': str(host_instance.errors)}, status=400)
         
         # Sending invites to invited participants' notification box
         for participant in user_data:
@@ -191,7 +206,7 @@ class CreateEvent(CreateAPIView):
                 # Code below should theoretically never run but just in case
                 event_instance.delete()
                 return JsonResponse({'error': "Date Input Error!"}, status=400)
-        return JsonResponse({'status': 'Success'}, status=200)
+        return JsonResponse({'status': 'success'}, status=200)
 
     
 # Post Request that records a user's vote on a date
