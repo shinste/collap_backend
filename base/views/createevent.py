@@ -1,0 +1,96 @@
+from rest_framework.generics import CreateAPIView
+from django.http import JsonResponse
+from ..models import Event, user
+from ..serializers import EventSerializer, EventUserSerializer, NotificationSerializer, EventDateSerializer
+from datetime import datetime
+
+
+class CreateEvent(CreateAPIView):
+    serializer_class = EventSerializer
+
+    def create(self, request, *args, **kwargs):
+        # Extracting data from request and checking missing information
+        try:
+            entire_data = request.data
+            event_data = entire_data.get('event')
+            user_data = entire_data.get('user')
+            date_data = entire_data.get('date')
+        except:
+            return JsonResponse({"error": "Invalid Format"}, status=400)
+        
+        if not event_data or not user_data or not date_data:
+            return JsonResponse({"error": "Missing Information"}, status=400)
+
+        # Precheck: checks to see if any other event has the same name before proceeding
+        all_events = list(Event.objects.filter(host=event_data["host"]).values_list('name', flat=True))
+        if event_data["name"] in all_events:
+            return JsonResponse({'error': "That event name is currently being used by you, please try another name!"}, status=400)
+        
+        # Precheck: if event data is valid
+        event_serializer = EventSerializer(data=event_data)
+        if not event_serializer.is_valid():
+            return JsonResponse({'error': "Invalid Event Info"}, status=400)
+        
+        # Precheck: if participant is in database
+        all_users = user.objects.all().values_list('username', flat=True)
+        for participant in user_data:
+            if participant not in all_users:
+                return JsonResponse({'error': 'User(s) Not Found!'}, status=400)
+
+        # Precheck: if date given is in right format
+        for curr_date in date_data:
+            try: 
+                datetime.fromisoformat(curr_date)
+            except Exception as e:
+                return JsonResponse({'error': "Date Input Error!"}, status=400)
+
+        # Creation of Event
+        event_instance = event_serializer.save()
+        
+        
+        # Adding host as sole participant in event
+        host_model = {
+                'event_id' : event_instance.pk,
+                'username' : event_data["host"]
+            }
+        host_instance = EventUserSerializer(data=host_model)
+        
+        
+        if host_instance.is_valid():
+            host_instance.save()
+        else:
+            # Code below should theoretically never run but just in case
+            event_instance.delete()
+            return JsonResponse({'error': str(host_instance.errors)}, status=400)
+        
+        # Sending invites to invited participants' notification box
+        for participant in user_data:
+            user_model = {
+                'event_id' : event_instance.pk,
+                'username' : participant,
+                'notification' : f"You have been invited to {event_instance.name}!"
+            }
+            notification_serializer = NotificationSerializer(data=user_model)
+            if notification_serializer.is_valid():
+                notification_serializer.save()
+            else:
+                # Code below should theoretically never run but just in case
+                event_instance.delete()
+                return JsonResponse({'error': 'Could not send Invites to Invited Users'}, status=400)
+            
+        # Creating records for each of the event dates
+        if event_data["primary_date"] not in date_data:
+            date_data.append(event_data["primary_date"])
+        for date in date_data:
+            date_model = {
+                'date' : date,
+                'event_id' : event_instance.pk
+            }
+            date_serializer = EventDateSerializer(data=date_model)
+            if date_serializer.is_valid():
+                date_serializer.save()
+            else:
+                # Code below should theoretically never run but just in case
+                event_instance.delete()
+                return JsonResponse({'error': "Date Input Error!"}, status=400)
+        return JsonResponse({'status': 'success'}, status=200)

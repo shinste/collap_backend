@@ -49,8 +49,6 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# Tests in Progress
-tests/
 
 # pyc Files
 *.pyc
