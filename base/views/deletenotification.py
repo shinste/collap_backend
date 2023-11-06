@@ -1,9 +1,9 @@
 from rest_framework.generics import CreateAPIView
 from django.http import JsonResponse
-from ..models import Notification
+from ..models import Notification, Event
 
-#Post Request that rejects an invite to an event and removes the notification
-class Reject(CreateAPIView):
+#Post Request that deletes notifications from an event
+class DeleteNotifications(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # Extracting data from request and checking missing information
         try:

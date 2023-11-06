@@ -9,7 +9,7 @@ from .views.notificationview import NotificationView
 from .views.primarydate import PrimaryDate
 from .views.rankdates import RankDates
 from .views.register import Register
-from .views.reject import Reject
+from .views.deletenotification import DeleteNotifications
 from .views.viewevents import ViewEvents
 from .views.voting import Voting
 from django.contrib import admin
@@ -28,6 +28,6 @@ urlpatterns = [
     path('primary/', PrimaryDate.as_view(), name="set primary"),
     path('event/leave/', LeaveEvent.as_view(), name="leave"),
     path('login/', Login.as_view(), name='login'),
-    path('reject/', Reject.as_view(), name='reject'),
+    path('delete_notifications/', DeleteNotifications.as_view(), name='reject'),
     path('event/delete/', Delete.as_view(), name='delete')
 ]

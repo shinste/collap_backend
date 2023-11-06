@@ -12,7 +12,9 @@ class PrimaryDate(CreateAPIView):
             event_id = entire_data["event_id"]
             date = entire_data["date"]
         except:
-            return JsonResponse({'error':'Missing Input'}, status=400)
+            return JsonResponse({'error':'Invalid JSON Error'}, status=400)
+        if not event_id or not date:
+            return JsonResponse({'error':'Missing Input'})
         try:
             event = Event.objects.get(event_id = event_id)
         except:

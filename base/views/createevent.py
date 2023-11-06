@@ -19,7 +19,7 @@ class CreateEvent(CreateAPIView):
             return JsonResponse({"error": "Invalid Format"}, status=400)
         
         if not event_data or not user_data or not date_data:
-            return JsonResponse({"error": "Missing Information"}, status=400)
+            return JsonResponse({"error": "Missing Input"}, status=400)
 
         # Precheck: checks to see if any other event has the same name before proceeding
         all_events = list(Event.objects.filter(host=event_data["host"]).values_list('name', flat=True))
@@ -41,7 +41,7 @@ class CreateEvent(CreateAPIView):
         for curr_date in date_data:
             try: 
                 datetime.fromisoformat(curr_date)
-            except Exception as e:
+            except:
                 return JsonResponse({'error': "Date Input Error!"}, status=400)
 
         # Creation of Event
