@@ -1,7 +1,7 @@
 from rest_framework.generics import CreateAPIView
 from django.http import JsonResponse
-from ..models import Availability, EventUser, Event, Vote
-
+from ..models import Availability, EventUser, Event, Vote, Notification
+from base.serializers import NotificationSerializer
 
 #Post Request that removes a person from an event
 class LeaveEvent(CreateAPIView):
@@ -10,11 +10,15 @@ class LeaveEvent(CreateAPIView):
         # Extracting data from request and checking missing information
         try: 
             entire_data = request.data
-            event_id = entire_data['event_id']
-            username = entire_data['username']
+            event_id = entire_data.get('event_id')
+            username = entire_data.get('username')
         except:
-            return JsonResponse({'error':'Missing Input'}, status=400)
+            return JsonResponse({'error':'Invalid JSON data'}, status=400)
 
+        if not event_id or not username:
+            return JsonResponse({"error":"Missing Input"},status=400)
+
+        
         # PreCheck: check if the participant is the host
         event = Event.objects.filter(event_id=event_id).first()
         if username == str(event.host):
@@ -32,6 +36,17 @@ class LeaveEvent(CreateAPIView):
         # Remove from Vote
         user_votes = Vote.objects.filter(event_id=event_id, username=username)
         user_votes.delete()
+        
+        # Remove from Notification and notify user of removal
+        event_notifications = Notification.objects.filter(event_id=event_id, username=username)
+        event_notifications.delete()
+        notification_instance = NotificationSerializer(data = {'event_id': event_id,
+                                                               'username': username,
+                                                               'notification': f"You are no longer in the event: {event.name}!"})
+        if notification_instance.is_valid():
+            notification_instance.save()
+        else:
+            return JsonResponse({'error': str(notification_instance.errors)}, status=400)
         
         # Remove from Availability
         user_availabilities = Availability.objects.filter(event_id=event_id, username=username)

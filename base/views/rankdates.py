@@ -8,7 +8,7 @@ class RankDates(ListAPIView):
     def list(self, request, *args, **kwargs):
         event_id = request.GET.get('event_id')
         if event_id is None:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+            return JsonResponse({'error': 'Missing Input'}, status=400)
 
         availability = Availability.objects.filter(event_id_id=event_id).values()
         ranked = {}

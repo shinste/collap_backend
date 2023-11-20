@@ -12,21 +12,24 @@ class Voting(CreateAPIView):
             username = entire_data.get("username")
             event_id = entire_data.get("event_id")
         except:
-            return JsonResponse({'error':'Missing Input'}, status=400)
-        # Precheck: checks if notification is present
+            return JsonResponse({'error':'Invalid JSON data'}, status=400)
+        if not username or not event_id:
+            return JsonResponse({"error":"Missing Input"},status=400)
         notification_instance = Notification.objects.filter(username=username, event_id=event_id)
-        if not notification_instance:
-            return JsonResponse({'error':'Sorry, we cannot find this notification!'}, status=400)
-        # Precheck: checks if user is in event
+        # Precheck: checks if event exists
+        event_instance = Event.objects.filter(event_id=event_id).first()
+        if not event_instance:
+            if notification_instance:
+                notification_instance.delete()
+            return JsonResponse({'error':'Sorry, this event no longer exists!'}, status=400)
+        # Precheck: checks if user is in event and if notification actually exists
         event_participants = EventUser.objects.filter(event_id=event_id).values_list('username', flat=True)
         if username not in event_participants:
-            notification_instance.delete()
+            if notification_instance:
+                notification_instance.delete()
             return JsonResponse({'error':'Sorry, either you were kicked from this event or you were never apart of it!'}, status=400)
-        # Precheck: checks if event exists
-        event_instance = Event.objects.get(event_id=event_id)
-        if not event_instance:
-            notification_instance.delete()
-            return JsonResponse({'error':'Sorry, this event no longer exists!'}, status=400)
+        elif not notification_instance:
+            return JsonResponse({'error':'Sorry, we cannot find this notification!'}, status=400)
         # Adding the vote to the vote table
         vote_instance = EventVoteSerializer(data=entire_data)
         if vote_instance.is_valid():
