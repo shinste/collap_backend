@@ -1,7 +1,6 @@
 from rest_framework.test import APITestCase
 from base.models import user, Event, Notification
 
-
 class PushVoteTest(APITestCase):
     def setUp(self):
         self.user = user.objects.create(username = "user", password = "password")

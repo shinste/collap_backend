@@ -2,8 +2,13 @@ from rest_framework.generics import CreateAPIView
 from ..models import *
 from ..serializers import *
 from django.http import JsonResponse
+import re
 
 class JoinEvent(CreateAPIView):
+    def validate_date_format(self, date):
+        # Validate that the date has the format YYYY-MM-DD.
+        date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+        return bool(date_pattern.match(date))
 
     def create(self, request, *args, **kwargs):
         # Extract data from the request
@@ -17,7 +22,16 @@ class JoinEvent(CreateAPIView):
             event = Event.objects.get(event_id=event_id_data)
             event_name = event.name
         except Event.DoesNotExist:
-            return JsonResponse({'error': 'Event not found'}, status=404)
+            return JsonResponse({'error': 'Event not found'}, status=400)
+
+        # Validate date format
+        for date in date_data:
+            if not self.validate_date_format(date):
+                return JsonResponse({'error': f'Invalid date format, {date}'}, status=400)
+
+        # Check if date list is empty
+        if not date_data:
+            return JsonResponse({'error': 'No dates provided'}, status=400)
 
         user_event_data = {
             'username': user_data,
