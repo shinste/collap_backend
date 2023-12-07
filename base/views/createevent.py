@@ -29,7 +29,7 @@ class CreateEvent(CreateAPIView):
         # Precheck: if event data is valid
         event_serializer = EventSerializer(data=event_data)
         if not event_serializer.is_valid():
-            return JsonResponse({'error': "Invalid Event Info"}, status=400)
+            return JsonResponse({'error': event_serializer.errors}, status=400)
         
         # Precheck: if participant is in database
         all_users = user.objects.all().values_list('username', flat=True)
