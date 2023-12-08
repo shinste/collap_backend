@@ -26,6 +26,9 @@ class Event(models.Model):
     primary_date = models.DateField()
     name = models.CharField(max_length=100)
     host = models.ForeignKey(user, on_delete=models.CASCADE)
+    start = models.TimeField()
+    end = models.TimeField()
+    primary_end = models.DateField()
     def __str__(self):
         return self.name
     
