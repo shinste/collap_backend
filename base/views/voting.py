@@ -7,13 +7,11 @@ from ..serializers import EventVoteSerializer
 class Voting(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # Extracting data from request and checking missing information
-        try:
-            entire_data = request.data
-            username = entire_data.get("username")
-            event_id = entire_data.get("event_id")
-        except:
-            return JsonResponse({'error':'Invalid JSON data'}, status=400)
-        if not username or not event_id:
+        entire_data = request.data
+        username = entire_data.get("username")
+        event_id = entire_data.get("event_id")
+        dates = entire_data.get("dates")
+        if not username or not event_id or not dates:
             return JsonResponse({"error":"Missing Input"},status=400)
         notification_instance = Notification.objects.filter(username=username, event_id=event_id)
         # Precheck: checks if event exists
@@ -30,11 +28,17 @@ class Voting(CreateAPIView):
             return JsonResponse({'error':'Sorry, either you were kicked from this event or you were never apart of it!'}, status=400)
         elif not notification_instance:
             return JsonResponse({'error':'Sorry, we cannot find this notification!'}, status=400)
-        # Adding the vote to the vote table
-        vote_instance = EventVoteSerializer(data=entire_data)
-        if vote_instance.is_valid():
-            vote_instance.save()
-        else:
-            return JsonResponse({'error': str(vote_instance.errors)})
+        # Adding the votes to the vote table
+        for date in dates:
+            each_vote = {
+                'username': username,
+                'event_id': event_id,
+                'date': date
+            }
+            vote_instance = EventVoteSerializer(data=each_vote)
+            if vote_instance.is_valid():
+                vote_instance.save()
+            else:
+                return JsonResponse({'error': str(vote_instance.errors)})
         notification_instance.delete()
         return JsonResponse({'status': 'success'}, status=200)

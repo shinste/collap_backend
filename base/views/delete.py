@@ -5,12 +5,10 @@ from ..models import Event
 # Post Request that deletes an event entirely
 class Delete(CreateAPIView):
     def create(self, request, *args, **kwargs):
-        try:
-            entire_data = request.data
-            username = entire_data.get("username")
-            event_id = entire_data.get("event_id")
-        except:
-            return JsonResponse({'error':'Invalid JSON Data'}, status=400)
+        
+        entire_data = request.data
+        username = entire_data.get("username")
+        event_id = entire_data.get("event_id")
         if not event_id or not username:
             return JsonResponse({'error':'Missing Input'}, status=400)
         delete_event = Event.objects.filter(event_id=event_id).first()

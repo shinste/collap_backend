@@ -22,13 +22,14 @@ class user(models.Model):
 
 
 class Event(models.Model):
-    event_id = models.CharField(max_length=8, primary_key=True, default=uuid.uuid4, unique=True)
+    event_id = models.CharField(max_length=20, primary_key=True, default=uuid.uuid4, unique=True)
     primary_date = models.DateField()
     name = models.CharField(max_length=100)
     host = models.ForeignKey(user, on_delete=models.CASCADE)
     start = models.TimeField()
     end = models.TimeField()
     primary_end = models.DateField()
+    voting = models.CharField(max_length=3, default="no")
     def __str__(self):
         return self.name
     
@@ -68,7 +69,7 @@ class Vote(models.Model):
     date = models.DateField()
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['event_id', 'username'], name='unique_vote')
+            models.UniqueConstraint(fields=['event_id', 'username', 'date'], name='unique_vote')
         ]
 
 class Availability(models.Model):

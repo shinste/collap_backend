@@ -8,12 +8,9 @@ class LeaveEvent(CreateAPIView):
     def create(self, request, *args, **kwargs):
         #needs to remove from EventUser, Vote, Availability
         # Extracting data from request and checking missing information
-        try: 
-            entire_data = request.data
-            event_id = entire_data.get('event_id')
-            username = entire_data.get('username')
-        except:
-            return JsonResponse({'error':'Invalid JSON data'}, status=400)
+        entire_data = request.data
+        event_id = entire_data.get('event_id')
+        username = entire_data.get('username')
 
         if not event_id or not username:
             return JsonResponse({"error":"Missing Input"},status=400)
@@ -51,4 +48,23 @@ class LeaveEvent(CreateAPIView):
         # Remove from Availability
         user_availabilities = Availability.objects.filter(event_id=event_id, username=username)
         user_availabilities.delete()
+
+        try:
+            participants = EventUser.objects.filter(event_id=event_id).values_list('username', flat=True)
+            for name in participants:
+                if name != username:
+
+                    notif_data = {
+                        'event_id': event_id,
+                        'username': name,
+                        'notification': f"{username} is no longer in {event.name}!"
+                    }
+                    if not Notification.objects.filter(event_id=event_id, username=name, notification=f"{username} is no longer in {event.name}!").exists():
+                        joining_notif = NotificationSerializer(data=notif_data)
+                        if joining_notif.is_valid():
+                            joining_notif.save()
+        except Exception as e:
+
+            return JsonResponse({'error': f'{e}'}, status=400)
+
         return JsonResponse({"status":"success"}, status=200)

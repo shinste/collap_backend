@@ -7,12 +7,9 @@ from datetime import datetime
 class PrimaryDate(CreateAPIView):
     def create(self, request, *args, **kwargs):
         # Extracting data from request and checking missing information
-        try:
-            entire_data = request.data
-            event_id = entire_data["event_id"]
-            date = entire_data["date"]
-        except:
-            return JsonResponse({'error':'Invalid JSON Error'}, status=400)
+        entire_data = request.data
+        event_id = entire_data["event_id"]
+        date = entire_data["date"]
         if not event_id or not date:
             return JsonResponse({'error':'Missing Input'})
         try:

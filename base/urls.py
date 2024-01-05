@@ -12,7 +12,16 @@ from .views.register import Register
 from .views.deletenotification import DeleteNotifications
 from .views.viewevents import ViewEvents
 from .views.voting import Voting
+from .views.joinevent import JoinEvent
+from .views.geteventinfo import GetEventInfo
+from .views.eventdates import EventDates
+from .views.invite import Invite
+from .views.getvotes import GetVotes
+from .views.pushvote import PushVote
+from .views.editdate import EditDate
+from .views.changeprimary import ChangePrimary
 from django.contrib import admin
+
 
 urlpatterns = [
     path('', Homepage.as_view(), name="homepage"),
@@ -20,7 +29,7 @@ urlpatterns = [
     path('event/view/', ViewEvents.as_view(), name="event view"),
     path('notification/', NotificationView.as_view() , name="notifications"),
     path('register/', Register.as_view(), name="register"),
-    path('hosted/', HostedEvents.as_view(), name="hosted events"),
+    path('event/hosted/', HostedEvents.as_view(), name="hosted events"),
     path('ranked/', RankDates.as_view(), name="rank"),
     path('event/create/', CreateEvent.as_view(), name="create event"),
     path('notification/', NotificationView.as_view(), name="notifications"),
@@ -29,5 +38,13 @@ urlpatterns = [
     path('event/leave/', LeaveEvent.as_view(), name="leave"),
     path('login/', Login.as_view(), name='login'),
     path('delete_notifications/', DeleteNotifications.as_view(), name='reject'),
-    path('event/delete/', Delete.as_view(), name='delete')
+    path('event/delete/', Delete.as_view(), name='delete'), 
+    path('event/join/', JoinEvent.as_view(), name="join_event"),
+    path('event/get_info/', GetEventInfo.as_view(), name="get event info"),
+    path('event/dates/', EventDates.as_view(), name="get event info"),
+    path('event/invite/', Invite.as_view(), name="invite"),
+    path('event/get_votes/', GetVotes.as_view(), name="get votes"),
+    path('event/push_votes/', PushVote.as_view(), name="push votes"),
+    path('event/edit_date/', EditDate.as_view(), name="edit date"),
+    path('event/change_primary/', ChangePrimary.as_view(), name="change primary date")
 ]

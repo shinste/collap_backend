@@ -1,7 +1,7 @@
 from rest_framework.generics import CreateAPIView
 from django.http import JsonResponse
 from ..models import Event, user
-from ..serializers import EventSerializer, EventUserSerializer, NotificationSerializer, EventDateSerializer
+from ..serializers import EventSerializer, EventUserSerializer, NotificationSerializer, EventDateSerializer, EventAvailabilitySerializer
 from datetime import datetime
 
 # Post Request that creates an event, invites participants, adds available dates
@@ -10,13 +10,10 @@ class CreateEvent(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         # Extracting data from request and checking missing information
-        try:
-            entire_data = request.data
-            event_data = entire_data.get('event')
-            user_data = entire_data.get('user')
-            date_data = entire_data.get('date')
-        except:
-            return JsonResponse({"error": "Invalid Format"}, status=400)
+        entire_data = request.data
+        event_data = entire_data.get('event')
+        user_data = entire_data.get('user')
+        date_data = entire_data.get('date')
         
         if not event_data or not user_data or not date_data:
             return JsonResponse({"error": "Missing Input"}, status=400)
@@ -93,4 +90,16 @@ class CreateEvent(CreateAPIView):
                 # Code below should theoretically never run but just in case
                 event_instance.delete()
                 return JsonResponse({'error': "Date Input Error!"}, status=400)
+        # Availability Insert
+        for date in date_data:
+            availability = {
+                'date': date,
+                'event_id' : event_instance.pk,
+                'username' : user_data
+            }
+            availability_instance = EventAvailabilitySerializer(data=availability)
+            if availability_instance.is_valid():
+                availability_instance.save()
+            
+        
         return JsonResponse({'status': 'success'}, status=200)

@@ -6,8 +6,19 @@ from ..models import Notification
 class NotificationView(ListAPIView):
     def list(self, request, *args, **kwargs):
         username = request.GET.get('username')
-        if username is None:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+        if not username:
+            return JsonResponse({'error':'Missing Input'})
 
         notifs = Notification.objects.filter(username=username).values()
-        return JsonResponse(list(notifs), safe=False, status=200)
+
+        def sort_key(notif):
+            notification_content = notif.get('notification', '')
+            if 'You must vote on' in notification_content or 'You have been invited' in notification_content:
+                return 0  # Assign a lower value for notifications containing specific phrases
+            else:
+                return 1  # Assign a higher value for other notifications
+
+        sorted_notifs = sorted(notifs, key=sort_key)
+
+
+        return JsonResponse(list(sorted_notifs), safe=False, status=200)
