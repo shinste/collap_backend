@@ -1,7 +1,6 @@
 from django.urls import path
 from .views.createevent import CreateEvent
 from .views.delete import Delete
-from .views.homepage import Homepage
 from .views.hostedevents import HostedEvents
 from .views.leaveevent import LeaveEvent
 from .views.login import Login
@@ -24,8 +23,7 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    path('', Homepage.as_view(), name="homepage"),
-    path('admin/', admin.site.urls),
+    path('/', admin.site.urls),
     path('event/view/', ViewEvents.as_view(), name="event view"),
     path('notification/', NotificationView.as_view() , name="notifications"),
     path('register/', Register.as_view(), name="register"),
