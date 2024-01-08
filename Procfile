@@ -1,1 +1,1 @@
-web: gunicorn collap.wsgi
+web: gunicorn collap_backend.wsgi
