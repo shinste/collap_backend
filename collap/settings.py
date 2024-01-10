@@ -147,8 +147,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "https://master--illustrious-unicorn-98eadd.netlify.app"
+#     # Add other origins if needed
+# ]
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "https://master--illustrious-unicorn-98eadd.netlify.app"
-    # Add other origins if needed
+    "http://localhost:3000",  # Local development
+    "https://master--illustrious-unicorn-98eadd.netlify.app",
+    "http://master--illustrious-unicorn-98eadd.netlify.app",
+    "https://master--illustrious-unicorn-98eadd.netlify.app/registration"
 ]
