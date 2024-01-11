@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 # ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(' ')
-ALLOWED_HOSTS = ['127.0.0.1', 'https://master--illustrious-unicorn-98eadd.netlify.app/']
+ALLOWED_HOSTS = ['127.0.0.1', 'collap-backend.onrender.com']
 #'127.0.0.1'
 
 # SECURE_HSTS_SECONDS = 31536000
