@@ -157,5 +157,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Local development
     "https://master--illustrious-unicorn-98eadd.netlify.app",
     "http://master--illustrious-unicorn-98eadd.netlify.app",
-    "https://master--illustrious-unicorn-98eadd.netlify.app/registration"
+    "https://master--illustrious-unicorn-98eadd.netlify.app/registration",
+    "https://master--illustrious-unicorn-98eadd.netlify.app/",
+    "*"
 ]
