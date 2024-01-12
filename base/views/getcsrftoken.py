@@ -1,6 +1,12 @@
 from django.http import JsonResponse
-from django.middleware.csrf import get_token
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
 
-def get_csrf_token(request):
-    csrf_token = get_token(request)
-    return JsonResponse({'csrf_token': csrf_token})
+@method_decorator(ensure_csrf_cookie, name='dispatch')
+class getcsrf(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request, format=None):
+        return JsonResponse({'Success': 'CSRF Cookie set'})
