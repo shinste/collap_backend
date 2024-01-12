@@ -19,7 +19,7 @@ from .views.getvotes import GetVotes
 from .views.pushvote import PushVote
 from .views.editdate import EditDate
 from .views.changeprimary import ChangePrimary
-from views.getcsrftoken import get_csrf_token
+from .views.getcsrftoken import get_csrf_token
 from django.contrib import admin
 
 
