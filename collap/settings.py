@@ -31,16 +31,8 @@ ALLOWED_HOSTS = ['127.0.0.1', 'collap-backend.onrender.com']
 #'127.0.0.1'
 
 SECURE_HSTS_SECONDS = 31536000
-
-SECURE_SSL_REDIRECT = True
-
-SESSION_COOKIE_SECURE = False
-
-CSRF_USE_SESSIONS = False
-CSRF_COOKIE_HTTPONLY = False       
+   
 CSRF_COOKIE_AGE = 8 * 3600           
-CSRF_COOKIE_SECURE = False
-CSRF_COOKIE_SAMESITE = 'Strict'
 
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
