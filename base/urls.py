@@ -19,7 +19,7 @@ from .views.getvotes import GetVotes
 from .views.pushvote import PushVote
 from .views.editdate import EditDate
 from .views.changeprimary import ChangePrimary
-from .views.getcsrftoken import get_csrf_token
+from .views.getcsrftoken import get_csrf_view
 from django.contrib import admin
 
 
@@ -46,5 +46,5 @@ urlpatterns = [
     path('event/push_votes/', PushVote.as_view(), name="push votes"),
     path('event/edit_date/', EditDate.as_view(), name="edit date"),
     path('event/change_primary/', ChangePrimary.as_view(), name="change primary date"),
-    path('get-csrf-token/', get_csrf_token, name='get_csrf_token')
+    path('get-csrf-token/', get_csrf_view.as_view(), name='get_csrf_token')
 ]

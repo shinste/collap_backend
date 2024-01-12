@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
-class getcsrf(APIView):
+class get_csrf_view(APIView):
     permission_classes = [AllowAny]
     def get(self, request, format=None):
         return JsonResponse({'Success': 'CSRF Cookie set'})
