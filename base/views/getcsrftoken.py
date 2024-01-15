@@ -5,11 +5,13 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from django.middleware.csrf import get_token
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+
 
 
 class get_csrf_view(APIView):
     permission_classes = [AllowAny]
-    @method_decorator(ensure_csrf_cookie, name='dispatch')
+    @ensure_csrf_cookie
     def get(self, request, format=None):
         get_token()
         return JsonResponse({'Token': 'sdjkfnsdd'})
