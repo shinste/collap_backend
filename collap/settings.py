@@ -24,12 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 # DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 # ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(' ')
 # ALLOWED_HOSTS = ['localhost', 'collap-backend.onrender.com']
 #'127.0.0.1'
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['collap-backend.onrender.com']
 
 SECURE_HSTS_SECONDS = 31536000
    
@@ -158,8 +158,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Local development
-#     "https://master--illustrious-unicorn-98eadd.netlify.app",
-#     "http://master--illustrious-unicorn-98eadd.netlify.app",
-#     "https://master--illustrious-unicorn-98eadd.netlify.app/registration",
-#     "https://master--illustrious-unicorn-98eadd.netlify.app/"
+    "https://master--illustrious-unicorn-98eadd.netlify.app",
+    "http://master--illustrious-unicorn-98eadd.netlify.app",
+    "https://master--illustrious-unicorn-98eadd.netlify.app/registration",
+    "https://master--illustrious-unicorn-98eadd.netlify.app/"
 ]
