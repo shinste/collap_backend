@@ -10,4 +10,5 @@ from django.middleware.csrf import get_token
 class get_csrf_view(APIView):
     permission_classes = [AllowAny]
     def get(self, request, format=None):
-        return JsonResponse({'Token': get_token()})
+        get_token()
+        return JsonResponse({'Token': 'sdjkfnsdd'})
