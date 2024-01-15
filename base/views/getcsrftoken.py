@@ -13,5 +13,4 @@ class get_csrf_view(APIView):
     permission_classes = [AllowAny]
     @ensure_csrf_cookie
     def get(self, request, format=None):
-        get_token()
-        return JsonResponse({'Token': 'sdjkfnsdd'})
+        return JsonResponse({'Token': get_token})

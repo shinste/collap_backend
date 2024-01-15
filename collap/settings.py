@@ -32,7 +32,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['collap-backend.onrender.com']
 
 SECURE_HSTS_SECONDS = 31536000
-   
+
 CSRF_COOKIE_AGE = 8 * 3600           
 
 
@@ -41,6 +41,10 @@ CSRF_ALLOWED_ORIGINS = ["http://localhost:3000"]
 CORS_ORIGINS_WHITELIST = ["http://localhost:3000"]
 CORS_ALLOW_CREDENTIALS = True
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
 # Application definition
 
 INSTALLED_APPS = [
@@ -148,7 +152,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
 
 # CORS_ALLOWED_ORIGINS = [
 #     "http://localhost:3000",
