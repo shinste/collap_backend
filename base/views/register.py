@@ -4,7 +4,6 @@ from ..serializers import UserSerializer
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
 # Post Request that creates a new user
-@csrf_exempt
 class Register(CreateAPIView):
     queryset = user.objects.all()
     serializer_class = UserSerializer
