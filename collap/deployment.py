@@ -1,6 +1,5 @@
 import os
 from .settings import *
-from .settings import BASE_DIR
 
 SECRET_KEY = os.environ["SECRET"]
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
@@ -19,10 +18,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware'
 ]
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 
 connection_string = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
 parameters = {pair.split('='):pair.split('=')[1] for pair in connection_string.split(' ')}
