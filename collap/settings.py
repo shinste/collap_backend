@@ -63,7 +63,7 @@ INSTALLED_APPS = [
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles') ## deploy setting
 SECRET = os.environ.get('SECRET', 'default_value_if_not_set')
 ALLOWED_HOSTS = [os.environ.get('WEBSITE_HOSTNAME')]
-CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']]
+CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ.get('WEBSITE_HOSTNAME')]
 DEBUG = False
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
