@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles') ## deploy setting
-SECRET_KEY = '13XdxKHyyK'
+SECRET = os.environ.get('SECRET', 'default_value_if_not_set')
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
 CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']]
 DEBUG = False
