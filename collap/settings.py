@@ -24,27 +24,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 # ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(' ')
 # ALLOWED_HOSTS = ['localhost', 'collap-backend.onrender.com']
 #'127.0.0.1'
-ALLOWED_HOSTS = ['collap-backend.onrender.com']
+ALLOWED_HOSTS = []
 
-SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_SECONDS = 31536000
 
-CSRF_COOKIE_AGE = 8 * 3600           
+# CSRF_COOKIE_AGE = 8 * 3600           
 
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
-CSRF_ALLOWED_ORIGINS = ["http://localhost:3000"]
-CORS_ORIGINS_WHITELIST = ["http://localhost:3000"]
-CORS_ALLOW_CREDENTIALS = True
+# CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+# CSRF_ALLOWED_ORIGINS = ["http://localhost:3000"]
+# CORS_ORIGINS_WHITELIST = ["http://localhost:3000"]
+# CORS_ALLOW_CREDENTIALS = True
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SAMESITE = 'None'
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SAMESITE = 'None'
+# SESSION_COOKIE_SAMESITE = 'None'
+# CORS_ORIGIN_ALLOW_ALL = False
+# CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -152,8 +154,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOW_CREDENTIALS = True
+
 
 # CORS_ALLOWED_ORIGINS = [
 #     "http://localhost:3000",
