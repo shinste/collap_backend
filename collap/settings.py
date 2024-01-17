@@ -21,15 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = os.environ.get('SECRET_KEY')
-SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
+# SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 # DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 # ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(' ')
 # ALLOWED_HOSTS = ['localhost', 'collap-backend.onrender.com']
 #'127.0.0.1'
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 # SECURE_HSTS_SECONDS = 31536000
 
@@ -60,10 +60,23 @@ INSTALLED_APPS = [
     'base',
     'corsheaders'
 ]
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles') ## deploy setting
+SECRET_KEY = os.environ["SECRET"]
+ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
+CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']]
+DEBUG = False
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+# DEVELOPER SETTINGS
+# SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
+# DEBUG = True
+# ALLOWED_HOSTS = []
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', ##deploy setting
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
