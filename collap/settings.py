@@ -61,13 +61,17 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles') ## deploy setting
-SECRET = os.environ.get('SECRET', 'default_value_if_not_set')
-ALLOWED_HOSTS = [os.environ.get('WEBSITE_HOSTNAME')]
-CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ.get('WEBSITE_HOSTNAME')]
-DEBUG = False
+# SECRET = os.environ.get('SECRET', 'default_value_if_not_set')
+# ALLOWED_HOSTS = [os.environ.get('WEBSITE_HOSTNAME')]
+# CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ.get('WEBSITE_HOSTNAME')]
+# DEBUG = False
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
+SECRET_KEY = "13XdxKHyyK"
+ALLOWED_HOSTS = ["collapbackend.azurewebsites.net"]
+CSRF_TRUSTED_ORIGINS = ['https://collapbackend.azurewebsites.net']
+DEBUG = False
 # DEVELOPER SETTINGS
 # SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
 # DEBUG = True
