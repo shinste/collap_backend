@@ -1,9 +1,9 @@
 import os
 from .settings import *
 
-SECRET_KEY = os.environ["SECRET"]
-ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
-CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']]
+SECRET_KEY = "13XdxKHyyK"
+ALLOWED_HOSTS = ["collapbackend.azurewebsites.net"]
+CSRF_TRUSTED_ORIGINS = ['https://collapbackend.azurewebsites.net']
 DEBUG = False
 
 INSTALLED_APPS = [
@@ -41,10 +41,10 @@ DATABASES = {
     
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': parameters['dbname'],
-        'HOST': parameters['host'],
-        'USER': parameters['user'],
-        'PASSWORD': parameters['password'],
+        'NAME': os.environ['DBNAME'],
+        'HOST': os.environ['DBHOST'],
+        'USER': os.environ['DBUSER'],
+        'PASSWORD': os.environ['DBPASS'],
         
     }
 }
