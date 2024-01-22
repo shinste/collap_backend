@@ -20,34 +20,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 # SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-# DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
-# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(' ')
-# ALLOWED_HOSTS = ['localhost', 'collap-backend.onrender.com']
-#'127.0.0.1'
-# ALLOWED_HOSTS = []
+DEBUG = True
 
-# SECURE_HSTS_SECONDS = 31536000
-
-# CSRF_COOKIE_AGE = 8 * 3600           
+ALLOWED_HOSTS = []
 
 
-# CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
-# CSRF_ALLOWED_ORIGINS = ["http://localhost:3000"]
-# CORS_ORIGINS_WHITELIST = ["http://localhost:3000"]
-# CORS_ALLOW_CREDENTIALS = True
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SAMESITE = 'None'
-# SESSION_COOKIE_SAMESITE = 'None'
-# CORS_ORIGIN_ALLOW_ALL = False
-# CORS_ALLOW_CREDENTIALS = True
-# Application definition
+CACHES = {
+        "default": {  
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get('CACHELOCATION'),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
 
 INSTALLED_APPS = [
     'rest_framework',
@@ -68,10 +60,6 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles') ## deploy setting
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-SECRET_KEY = "13XdxKHyyK"
-ALLOWED_HOSTS = ["collapbackend.azurewebsites.net"]
-CSRF_TRUSTED_ORIGINS = ['https://collapbackend.azurewebsites.net']
-DEBUG = False
 # DEVELOPER SETTINGS
 # SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
 # DEBUG = True
@@ -179,11 +167,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     "https://master--illustrious-unicorn-98eadd.netlify.app"
 #     # Add other origins if needed
 # ]
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Local development
-    "https://master--illustrious-unicorn-98eadd.netlify.app",
-    "http://master--illustrious-unicorn-98eadd.netlify.app",
-    "https://master--illustrious-unicorn-98eadd.netlify.app/registration",
-    "https://master--illustrious-unicorn-98eadd.netlify.app/"
-]
