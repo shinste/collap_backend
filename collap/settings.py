@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["collapbackend.azurewebsites.net"]
 
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
