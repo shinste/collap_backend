@@ -31,15 +31,15 @@ ALLOWED_HOSTS = []
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
-CACHES = {
-        "default": {  
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": os.environ.get('CACHELOCATION'),
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        },
-    }
-}
+# CACHES = {
+#         "default": {  
+#             "BACKEND": "django_redis.cache.RedisCache",
+#             "LOCATION": os.environ.get('CACHELOCATION'),
+#             "OPTIONS": {
+#                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         },
+#     }
+# }
 
 INSTALLED_APPS = [
     'rest_framework',
