@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
-from rest_framework.permissions import AllowAny
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
-# SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
+SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -109,12 +108,23 @@ WSGI_APPLICATION = 'collap.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DBNAME'),
+        'HOST': os.environ.get('DBHOST'),
+        'USER': os.environ.get('DBUSER'),
+        'PASSWORD': os.environ.get('DBPASS'),
     }
 }
+
 # database_url = os.environ.get("DATABASE_URL")
 # DATABASES["default"] = dj_database_url.parse("postgres://collap_postgresql_db_user:4hDFC0YklQTToPlcGXBJ7z506BFDi3Sf@dpg-cmffcsen7f5s73c4vi40-a.oregon-postgres.render.com/collap_postgresql_db")
 #postgres://collap_postgresql_db_user:4hDFC0YklQTToPlcGXBJ7z506BFDi3Sf@dpg-cmffcsen7f5s73c4vi40-a.oregon-postgres.render.com/collap_postgresql_db
