@@ -13,7 +13,7 @@ from django.core.wsgi import get_wsgi_application
 
 settings_module = 'collap.production' if 'WEBSITE_HOSTNAME' in os.environ else 'collap.settings'
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'collap.production')
 
 application = get_wsgi_application()
 
