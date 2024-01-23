@@ -24,9 +24,9 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: app
-      POSTGRES_USER: app_user
-      POSTGRES_PASSWORD: app_password
+      POSTGRES_DB: collapbackend-database
+      POSTGRES_USER: yizucfbmnb
+      POSTGRES_PASSWORD: 6644Y08G42QB44XI$
 
   redis:
     image: redis
