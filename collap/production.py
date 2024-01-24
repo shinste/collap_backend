@@ -1,7 +1,7 @@
 import os
 
-from .settings import *  # noqa
-from .settings import BASE_DIR
+from settings import *  # noqa
+from settings import BASE_DIR
 ALLOWED_HOSTS = ["collapbackend.azurewebsites.net"]
 # ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
 CSRF_TRUSTED_ORIGINS = ['https://' + os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
@@ -47,3 +47,7 @@ CACHES = {
         },
     }
 }
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 9999
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True

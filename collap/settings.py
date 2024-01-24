@@ -19,13 +19,30 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
-SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
+# SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
+# DEBUG = TRUE
+# ALLOWED_HOSTS = []
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.environ.get('DBNAME'),
+#         'HOST': os.environ.get('DBHOST'),
+#         'USER': os.environ.get('DBUSER'),
+#         'PASSWORD': os.environ.get('DBPASS'),
+#         'PORT': 5432
+#     }
+# }
+
+SECRET_KEY = 'Kavo6O4bu5ahsdkjfa78ydsfakjnlsdlkds9834y4938y23jlnkshugawy8932ifeesfkjsdf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["collapbackend.azurewebsites.net"]
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
@@ -40,6 +57,17 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 #     }
 # }
 
+
+CACHES = {
+        "default": {  
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get('AZURE_REDIS_CONNECTIONSTRING'),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+        },
+    }
+}
 INSTALLED_APPS = [
     'rest_framework',
     'django.contrib.admin',
@@ -49,7 +77,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base',
-    'corsheaders'
+    'corsheaders',
+    "whitenoise.runserver_nostatic",
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles') ## deploy setting
 # SECRET = os.environ.get('SECRET', 'default_value_if_not_set')
@@ -57,12 +86,6 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles') ## deploy setting
 # CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ.get('WEBSITE_HOSTNAME')]
 # DEBUG = False
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-# DEVELOPER SETTINGS
-# SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
-# DEBUG = True
-# ALLOWED_HOSTS = []
 
 
 MIDDLEWARE = [
@@ -115,13 +138,18 @@ WSGI_APPLICATION = 'collap.wsgi.application'
 #     }
 # }
 
+
+
+
+conn_str = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
+conn_str_params = {pair.split('=')[0]: pair.split('=')[1] for pair in conn_str.split(' ')}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DBNAME'),
-        'HOST': os.environ.get('DBHOST'),
-        'USER': os.environ.get('DBUSER'),
-        'PASSWORD': os.environ.get('DBPASS'),
+        'NAME': conn_str_params['DBNAME'],
+        'HOST': conn_str_params['DBHOST'],
+        'USER': conn_str_params['DBUSER'],
+        'PASSWORD': conn_str_params['DBPASSWORD'],
         'PORT': 5432
     }
 }
@@ -178,3 +206,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     "https://master--illustrious-unicorn-98eadd.netlify.app"
 #     # Add other origins if needed
 # ]
+
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 9999
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
