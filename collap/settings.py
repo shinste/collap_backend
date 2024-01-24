@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 #         'PORT': 5432
 #     }
 # }
+STATIC_ROOT = BASE_DIR/'staticfiles'
 
 # SECRET_KEY = 'Kavo6O4bu5ahsdkjfa78ydsfakjnlsdlkds9834y4938y23jlnkshugawy8932ifeesfkjsdf'
 
