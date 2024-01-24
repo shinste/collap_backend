@@ -15,12 +15,11 @@ import sys
 sys.path.append('/mnt/d/Work/Software_Projects/collap_backend')
 
 
-print(f"DJANGO_SETTINGS_MODULE before: {os.environ.get('DJANGO_SETTINGS_MODULE')}")
-
+settings_module = 'collap.production' if 'WEBSITE_HOSTNAME' in os.environ else 'collap.settings'
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'collap.production')
-os.environ['DJANGO_SETTINGS_MODULE'] = 'collap.production'
+os.environ['DJANGO_SETTINGS_MODULE'] = settings_module
 
-print(f"DJANGO_SETTINGS_MODULE after: {os.environ.get('DJANGO_SETTINGS_MODULE')}")
+print(f"DJANGO_SETTINGS_MODULE after: {settings_module}")
 
 # settings_module = 'collap.production' if 'WEBSITE_HOSTNAME' in os.environ else 'collap.settings'
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'collap.production')

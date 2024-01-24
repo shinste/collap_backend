@@ -6,7 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'collap.settings')
+    settings_module = 'collap.production' if 'WEBSITE_HOSTNAME' in os.environ else 'collap.settings'
+    # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'collap.production')
+    os.environ['DJANGO_SETTINGS_MODULE'] = settings_module
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
