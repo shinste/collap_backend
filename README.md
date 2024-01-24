@@ -165,7 +165,7 @@ Error Handling:
 * Description: Creates and hosts an event, sends invites to participants' notifications
 * Endpoint Type: POST
 * Endpoint: event\create
-* Parameters: Event (JSON)
+* Parameters: Event (JSON), User(String[]), Date(String[])
 * Return Type: JSON
 * Example Case:
   - Request:
@@ -174,7 +174,10 @@ Error Handling:
     "event": {
         "name": "testvaliddatesecondtry",
         "host": "shinste",
-        "primary_date": "2023-03-23"
+        "start": "18:03:01",
+        "end": "20:03:01",
+        "primary": "2023-03-23",
+        "primary_end": "2023-10-23",
     },
     "user": [
         "kendrick",
@@ -197,12 +200,12 @@ Error Handling:
 or 
 ```
 {
-  "status": "failure"
+  "error": "That event name is currently being used by you, please try another name!"
 }
 ```
 
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found, Participant Username not found
+  - 400: Missing Body Parameters, Event Name already being used, Username not found, Participant Username not found, Date Input Error
 
 * Sequence Diagram
 ![Sequence Diagram](./Sequence_Diagram/Create%20Event.png)
@@ -212,7 +215,7 @@ or
 * Description: Displays the events the user is currently hosting
 * Endpoint Type: GET
 * Endpoint: /hosted
-* Parameters: username (String)
+* Parameters: Username (String)
 * Return Type: JSON
 * Example Case:
   - Request:
@@ -223,7 +226,7 @@ or
 ```
   - Response(s):
 ```
-[
+{
   {
     "eventid": 1,
     "name": "skiing",
@@ -246,10 +249,10 @@ or
       "brandon"
     ]
   }
-]
+}
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found
+  - 400: Missing Body Parameters
 
 ### Push Voting
 * Endpoint Name: Push Votes
@@ -454,11 +457,11 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "You don't have the authority to delete this event!"
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found, Event ID not found
+  - 400: Missing Body Parameters, Event ID not found
 
 * Sequence Diagram
 ![Sequence Diagram](./Sequence_Diagram/DeleteSD.png)
@@ -499,9 +502,157 @@ or
 
 ### Get Votes
 * Endpoint Name: Get Votes
-* Description: Shows all the dates listed for voting and their vote counts
+* Description: Shows all votes for each event that the user is hosting, also shows if the event is currently voting, along with other information
 * Endpoint Type: GET
 * Endpoint: \get_votes
+* Parameters: Username (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "shinste"
+}
+```
+  - Response(s):
+```
+{
+  "status": "Inactive",
+  "dates": [
+    "2023-03-12",
+    "2023-03-25",
+    "2023-04-01"
+  ],
+  "votes": {
+    "2023-03-12": 5,
+    "2023-03-25": 2,
+    "2023-04-01": 1
+  }
+"total_users": [
+  shinste,
+  joseph,
+  jason,
+  brandon
+],
+"waiting": [
+  brandon,
+  jason
+]
+  
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters
+
+  * Sequence Diagram
+![Sequence Diagram](./Sequence_Diagram/GetVotesSD.png)
+
+### Change Primary
+
+* Endpoint Name: Set Primary
+* Description: Sets the primary time and date
+* Endpoint Type: POST
+* Endpoint: \primary
+* Parameters: Event ID (Int), Start (String), End (String), Primary (String), Primary End (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "event_id": 123,
+  "start": 18:52:03,
+  "end": 20:45:32,
+  "primary": "2023-04-13",
+  "primary_end": "2023-04-13"
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "error": 'Date already the Primary Date'
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Same date as Primary Date
+ 
+  * Sequence Diagram
+/////
+
+### Delete Notification
+* Endpoint Name: Delete Notification
+* Description: Dismisses notification
+* Endpoint Type: POST
+* Endpoint: event\delete_notifications
+* Parameters: Username (String), Event ID (Int), Notification (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "username",
+  "event_id": 123
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "error": "No notification found for this event/participant."
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, No notification
+ 
+### Edit Dates
+* Endpoint Name: Edit Dates
+* Description: Adds or Removes current possible dates from the event
+* Endpoint Type: POST
+* Endpoint: event/edit_date
+* Parameters: Dates (String[]), Event ID (Int), Action (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "date": [
+    "2023-12-12",
+    "2023-12-30"
+  ],
+  "event_id": 123,
+  "action": 'delete'
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "error": "Date already added to Event"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Requested Date already in event
+
+### Get Votes
+* Endpoint Name: Event Dates
+* Description: Shows all event dates from a single event
+* Endpoint Type: GET
+* Endpoint: event/dates
 * Parameters: Event ID (Int)
 * Return Type: JSON
 * Example Case:
@@ -514,44 +665,53 @@ or
   - Response(s):
 ```
 {
-  "2023-03-12": 5,
-  "2023-03-25": 2,
-  "2023-04-01": 1
+  [
+    "2023-03-12"
+    "2023-03-25"
+    "2023-04-01"
+  ]
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Event ID not found, Votes not found
-
-  * Sequence Diagram
-![Sequence Diagram](./Sequence_Diagram/GetVotesSD.png)
-
-### Set Primary
-
-* Endpoint Name: Set Primary
-* Description: Sets the primary date
-* Endpoint Type: POST
-* Endpoint: \primary
-* Parameters: Event ID (Int), Date (String)
+  - 400: Missing Body Parameters
+ 
+### Get Event Info
+* Endpoint Name: Event Info
+* Description: Shows all event info from an event
+* Endpoint Type: GET
+* Endpoint: event/get_info
+* Parameters: Event ID (Int)
 * Return Type: JSON
 * Example Case:
   - Request:
 ```
 {
-  "event_id": 123,
-  "date": "2023-04-13"
+  "event_id": 123
 }
 ```
   - Response(s):
 ```
 {
-  "status": "success"
+    "event": {
+        "name": "testvaliddatesecondtry",
+        "host": "shinste",
+        "start": "18:03:01",
+        "end": "20:03:01",
+        "primary": "2023-03-23",
+        "primary_end": "2023-10-23",
+    },
+    "user": [
+        "kendrick",
+        "joseph"
+        ],
+    "date": [
+        "2023-08-23",
+        "2023-11-23",
+        "2023-03-23"
+    ]
 }
 ```
-or 
-```
-{
-  "status": "failure"
-}
-```
-  * Sequence Diagram
-![Sequence Diagram](./Sequence_Diagram/SetPrimarySD.png)
+* Error Handling:
+  - 400: Missing Body Parameters
+ 
+
