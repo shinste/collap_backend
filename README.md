@@ -93,7 +93,7 @@ or
 
 ### Events
 * Endpoint Name: View Events
-* Description: Retrieves a list of the user's participating events
+* Description: Retrieves a list of the user's participating events and all info
 * Endpoint Type: GET
 * Endpoint: event/view
 * Parameters: Username (String)
@@ -113,6 +113,9 @@ or
     "name": "skiing",
     "host": "stephen",
     "primary": "4/12/23",
+    "primary_end": "4/13/23",
+    "start": 18:02:12,
+    "end": 18:03:12,
     "dates": ["4/12/23", "4/14/23"],
     "participants": [
       "joseph",
@@ -133,7 +136,7 @@ or
 ]
 ```
 Error Handling:
-  - 400: Missing Body Parameters, Username not found
+  - 400: Missing Body Parameters
 
 
 ### Notifications View
@@ -293,7 +296,7 @@ or
 * Description: Participants of an event can vote on preferred date
 * Endpoint Type: POST
 * Endpoint: \vote
-* Parameters: Username (String), Event ID (Integer), Votes (String)
+* Parameters: Username (String), Event ID (Integer), Dates (String[])
 * Return Type: JSON
 * Example Case:
   - Request:
@@ -301,7 +304,10 @@ or
 {
   "username": "username",
   "event_id": 123,
-  "date": "2023-04-01"
+  "date": [
+    "2023-14-12",
+    "2023-15-12"
+  ]
 }
 ```
   - Response(s):
@@ -313,11 +319,11 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "Sorry, either you were kicked from this event or you were never apart of it!"
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found
+  - 400: Missing Body Parameters, Event doesn't exist anymore, Notification doesn't exist anymore, No longer in Event
   
 * Sequence Diagram: 
 ![Vote](./Sequence_Diagram/Voting.png)
