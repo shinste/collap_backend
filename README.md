@@ -713,5 +713,35 @@ or
 ```
 * Error Handling:
   - 400: Missing Body Parameters
- 
+
+ ### Invite
+* Endpoint Name: Invite
+* Description: Invite users to an event
+* Endpoint Type: POST
+* Endpoint: event/edit_date
+* Parameters: Username (String), Event ID (Int), Name (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "new_friend"
+  "event_id": 123,
+  "name": "skiing trip"
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "error": "User already in event"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Inviting User already in event
 
