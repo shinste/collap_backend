@@ -136,8 +136,8 @@ Error Handling:
   - 400: Missing Body Parameters, Username not found
 
 
-### Notifications
-* Endpoint Name: Notifications
+### Notifications View
+* Endpoint Name: Notifications View
 * Description: Retrieves a list of the user's notifications
 * Endpoint Type: GET
 * Endpoint: /notification
@@ -153,8 +153,10 @@ Error Handling:
   - Responses:
 ```
 {
+  [
    "Vote on Date",
    "Invited to Camping :)"
+  ]
 }
 ```
 * Error Handling:
@@ -256,21 +258,16 @@ or
 
 ### Push Voting
 * Endpoint Name: Push Votes
-* Description: Hosted User can PUSH date voting onto participating users
+* Description: Hosted User can PUSH date voting onto participating users, sets the event open to voting, deletes previous votes if they exist, pushes voting notifications that are non-dismissable to participants
 * Endpoint Type: POST
 * Endpoint: \push
-* Parameters: Event ID (Integer), Dates (String)
+* Parameters: Event ID (Integer)
 * Return Type: JSON
 * Example Case:
   - Request:
 ```
 {
   "event_id": 123,
-  "dates":[
-    "2023-04-23",
-    "2023-04-25",
-    "2023-04-21"
-  ]
 }
 ```
   - Response(s):
@@ -282,11 +279,11 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "Missing Input"
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found
+  - 400: Missing Body Parameters
 
 * Sequence Diagram: 
 ![Push Voting](./Sequence_Diagram/Push%20Voting.png)
@@ -327,7 +324,7 @@ or
 
 ### Join
 * Endpoint Name: Join
-* Description: User can join event, updates eventDate table, inserts into availability table, removes from notifications table
+* Description: User can join event, updates eventDate table, inserts into availability table, removes from notifications table, sends notifications to other participants of event.
 * Endpoint Type: POST
 * Endpoint: event\join
 * Parameters: Username (String), Event ID (Integer), Dates (String)
@@ -358,7 +355,7 @@ or
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot join/leave
+  - 400: Missing Body Parameters, Event ID not found
 
 
 * Sequence Diagram
@@ -390,7 +387,7 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "User already in event"
 }
 ```
 * Error Handling:
@@ -399,9 +396,9 @@ or
 * Sequence Diagram
 ![Sequence Diagram](./Sequence_Diagram/RejectSD.png)
 
-### Leave
-* Endpoint Name: Leave
-* Description: Removes user from an event and removes any votes from that user, can be invoked by leaving user or host
+### Leave Event
+* Endpoint Name: Leave Event
+* Description: Removes user from event, to be used by user for himself/herself, or invoked by host for another user, sends notification to all remaining users of event
 * Endpoint Type: POST
 * Endpoint: event\leave
 * Parameters: Username (String), Event ID (Integer)
@@ -423,11 +420,11 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "The Host cannot leave the Event, Try deleting the Event instead!"
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot leave
+  - 400: Missing Body Parameters, User already not in event, Host Cannot leave
   
 * Sequence Diagram
 ![Sequence Diagram](./Sequence_Diagram/LeaveSD.png)
@@ -718,7 +715,7 @@ or
 * Endpoint Name: Invite
 * Description: Invite users to an event
 * Endpoint Type: POST
-* Endpoint: event/edit_date
+* Endpoint: event/invite
 * Parameters: Username (String), Event ID (Int), Name (String)
 * Return Type: JSON
 * Example Case:
