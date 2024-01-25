@@ -46,5 +46,3 @@ DATABASES = {
         'PASSWORD': conn_str_params['password'],
     }
 }
-
-SECURE_SSL_REDIRECT = True
