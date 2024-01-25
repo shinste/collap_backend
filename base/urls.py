@@ -20,11 +20,13 @@ from .views.pushvote import PushVote
 from .views.editdate import EditDate
 from .views.changeprimary import ChangePrimary
 from .views.getcsrftoken import get_csrf_view
+from .views.homepage import Homepage
 from django.contrib import admin
 
 
 urlpatterns = [
-    path('', admin.site.urls, name="admin"),
+    path('', Homepage.as_view(), name="homepage"),
+    path('/', admin.site.urls, name="admin"),
     path('event/view/', ViewEvents.as_view(), name="event view"),
     path('notification/', NotificationView.as_view() , name="notifications"),
     path('register/', Register.as_view(), name="register"),
