@@ -33,7 +33,6 @@ urlpatterns = [
     path('event/hosted/', HostedEvents.as_view(), name="hosted events"),
     path('ranked/', RankDates.as_view(), name="rank"),
     path('event/create/', CreateEvent.as_view(), name="create event"),
-    path('notification/', NotificationView.as_view(), name="notifications"),
     path('vote/', Voting.as_view(), name="vote"),
     path('primary/', PrimaryDate.as_view(), name="set primary"),
     path('event/leave/', LeaveEvent.as_view(), name="leave"),

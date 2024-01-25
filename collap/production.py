@@ -47,17 +47,4 @@ DATABASES = {
     }
 }
 
-# CACHES = {
-#         "default": {  
-#             "BACKEND": "django_redis.cache.RedisCache",
-#             "LOCATION": os.environ.get('AZURE_REDIS_CONNECTIONSTRING'),
-#             "OPTIONS": {
-#                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#                 "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
-#         },
-#     }
-# }
-# SECURE_SSL_REDIRECT = True
-# SECURE_HSTS_SECONDS = 9999
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
