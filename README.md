@@ -93,7 +93,7 @@ or
 
 ### Events
 * Endpoint Name: View Events
-* Description: Retrieves a list of the user's participating events
+* Description: Retrieves a list of the user's participating events and all info
 * Endpoint Type: GET
 * Endpoint: event/view
 * Parameters: Username (String)
@@ -113,6 +113,9 @@ or
     "name": "skiing",
     "host": "stephen",
     "primary": "4/12/23",
+    "primary_end": "4/13/23",
+    "start": 18:02:12,
+    "end": 18:03:12,
     "dates": ["4/12/23", "4/14/23"],
     "participants": [
       "joseph",
@@ -133,11 +136,11 @@ or
 ]
 ```
 Error Handling:
-  - 400: Missing Body Parameters, Username not found
+  - 400: Missing Body Parameters
 
 
-### Notifications
-* Endpoint Name: Notifications
+### Notifications View
+* Endpoint Name: Notifications View
 * Description: Retrieves a list of the user's notifications
 * Endpoint Type: GET
 * Endpoint: /notification
@@ -153,8 +156,10 @@ Error Handling:
   - Responses:
 ```
 {
+  [
    "Vote on Date",
    "Invited to Camping :)"
+  ]
 }
 ```
 * Error Handling:
@@ -165,7 +170,7 @@ Error Handling:
 * Description: Creates and hosts an event, sends invites to participants' notifications
 * Endpoint Type: POST
 * Endpoint: event\create
-* Parameters: Event (JSON)
+* Parameters: Event (JSON), User(String[]), Date(String[])
 * Return Type: JSON
 * Example Case:
   - Request:
@@ -174,7 +179,10 @@ Error Handling:
     "event": {
         "name": "testvaliddatesecondtry",
         "host": "shinste",
-        "primary_date": "2023-03-23"
+        "start": "18:03:01",
+        "end": "20:03:01",
+        "primary": "2023-03-23",
+        "primary_end": "2023-10-23",
     },
     "user": [
         "kendrick",
@@ -197,12 +205,12 @@ Error Handling:
 or 
 ```
 {
-  "status": "failure"
+  "error": "That event name is currently being used by you, please try another name!"
 }
 ```
 
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found, Participant Username not found
+  - 400: Missing Body Parameters, Event Name already being used, Username not found, Participant Username not found, Date Input Error
 
 * Sequence Diagram
 ![Sequence Diagram](./Sequence_Diagram/Create%20Event.png)
@@ -212,7 +220,7 @@ or
 * Description: Displays the events the user is currently hosting
 * Endpoint Type: GET
 * Endpoint: /hosted
-* Parameters: username (String)
+* Parameters: Username (String)
 * Return Type: JSON
 * Example Case:
   - Request:
@@ -223,7 +231,7 @@ or
 ```
   - Response(s):
 ```
-[
+{
   {
     "eventid": 1,
     "name": "skiing",
@@ -246,27 +254,59 @@ or
       "brandon"
     ]
   }
-]
+}
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found
+  - 400: Missing Body Parameters
 
 ### Push Voting
 * Endpoint Name: Push Votes
-* Description: Hosted User can PUSH date voting onto participating users
+* Description: Hosted User can PUSH date voting onto participating users, sets the event open to voting, deletes previous votes if they exist, pushes voting notifications that are non-dismissable to participants
 * Endpoint Type: POST
 * Endpoint: \push
-* Parameters: Event ID (Integer), Dates (String)
+* Parameters: Event ID (Integer)
 * Return Type: JSON
 * Example Case:
   - Request:
 ```
 {
   "event_id": 123,
-  "dates":[
-    "2023-04-23",
-    "2023-04-25",
-    "2023-04-21"
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "error": "Missing Input"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters
+
+* Sequence Diagram: 
+![Push Voting](./Sequence_Diagram/Push%20Voting.png)
+
+### Vote
+* Endpoint Name: Vote
+* Description: Participants of an event can vote on preferred date
+* Endpoint Type: POST
+* Endpoint: \vote
+* Parameters: Username (String), Event ID (Integer), Dates (String[])
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "username",
+  "event_id": 123,
+  "date": [
+    "2023-14-12",
+    "2023-15-12"
   ]
 }
 ```
@@ -279,52 +319,18 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "Sorry, either you were kicked from this event or you were never apart of it!"
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found
-
-* Sequence Diagram: 
-![Push Voting](./Sequence_Diagram/Push%20Voting.png)
-
-### Vote
-* Endpoint Name: Vote
-* Description: Participants of an event can vote on preferred date
-* Endpoint Type: POST
-* Endpoint: \vote
-* Parameters: Username (String), Event ID (Integer), Votes (String)
-* Return Type: JSON
-* Example Case:
-  - Request:
-```
-{
-  "username": "username",
-  "event_id": 123,
-  "date": "2023-04-01"
-}
-```
-  - Response(s):
-```
-{
-  "status": "success"
-}
-```
-or 
-```
-{
-  "status": "failure"
-}
-```
-* Error Handling:
-  - 400: Missing Body Parameters, Username not found
+  - 400: Missing Body Parameters, Event doesn't exist anymore, Notification doesn't exist anymore, No longer in Event
   
 * Sequence Diagram: 
 ![Vote](./Sequence_Diagram/Voting.png)
 
 ### Join
 * Endpoint Name: Join
-* Description: User can join event, updates eventDate table, inserts into availability table, removes from notifications table
+* Description: User can join event, updates eventDate table, inserts into availability table, removes from notifications table, sends notifications to other participants of event.
 * Endpoint Type: POST
 * Endpoint: event\join
 * Parameters: Username (String), Event ID (Integer), Dates (String)
@@ -355,7 +361,7 @@ or
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot join/leave
+  - 400: Missing Body Parameters, Event ID not found
 
 
 * Sequence Diagram
@@ -387,7 +393,7 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "User already in event"
 }
 ```
 * Error Handling:
@@ -396,9 +402,9 @@ or
 * Sequence Diagram
 ![Sequence Diagram](./Sequence_Diagram/RejectSD.png)
 
-### Leave
-* Endpoint Name: Leave
-* Description: Removes user from an event and removes any votes from that user, can be invoked by leaving user or host
+### Leave Event
+* Endpoint Name: Leave Event
+* Description: Removes user from event, to be used by user for himself/herself, or invoked by host for another user, sends notification to all remaining users of event
 * Endpoint Type: POST
 * Endpoint: event\leave
 * Parameters: Username (String), Event ID (Integer)
@@ -420,11 +426,11 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "The Host cannot leave the Event, Try deleting the Event instead!"
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found, Event ID not found, Cannot leave
+  - 400: Missing Body Parameters, User already not in event, Host Cannot leave
   
 * Sequence Diagram
 ![Sequence Diagram](./Sequence_Diagram/LeaveSD.png)
@@ -454,11 +460,11 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "You don't have the authority to delete this event!"
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Username not found, Event ID not found
+  - 400: Missing Body Parameters, Event ID not found
 
 * Sequence Diagram
 ![Sequence Diagram](./Sequence_Diagram/DeleteSD.png)
@@ -499,9 +505,157 @@ or
 
 ### Get Votes
 * Endpoint Name: Get Votes
-* Description: Shows all the dates listed for voting and their vote counts
+* Description: Shows all votes for each event that the user is hosting, also shows if the event is currently voting, along with other information
 * Endpoint Type: GET
 * Endpoint: \get_votes
+* Parameters: Username (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "shinste"
+}
+```
+  - Response(s):
+```
+{
+  "status": "Inactive",
+  "dates": [
+    "2023-03-12",
+    "2023-03-25",
+    "2023-04-01"
+  ],
+  "votes": {
+    "2023-03-12": 5,
+    "2023-03-25": 2,
+    "2023-04-01": 1
+  }
+"total_users": [
+  shinste,
+  joseph,
+  jason,
+  brandon
+],
+"waiting": [
+  brandon,
+  jason
+]
+  
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters
+
+  * Sequence Diagram
+![Sequence Diagram](./Sequence_Diagram/GetVotesSD.png)
+
+### Change Primary
+
+* Endpoint Name: Set Primary
+* Description: Sets the primary time and date
+* Endpoint Type: POST
+* Endpoint: \primary
+* Parameters: Event ID (Int), Start (String), End (String), Primary (String), Primary End (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "event_id": 123,
+  "start": 18:52:03,
+  "end": 20:45:32,
+  "primary": "2023-04-13",
+  "primary_end": "2023-04-13"
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "error": 'Date already the Primary Date'
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Same date as Primary Date
+ 
+  * Sequence Diagram
+/////
+
+### Delete Notification
+* Endpoint Name: Delete Notification
+* Description: Dismisses notification
+* Endpoint Type: POST
+* Endpoint: event\delete_notifications
+* Parameters: Username (String), Event ID (Int), Notification (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "username",
+  "event_id": 123
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "error": "No notification found for this event/participant."
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, No notification
+ 
+### Edit Dates
+* Endpoint Name: Edit Dates
+* Description: Adds or Removes current possible dates from the event
+* Endpoint Type: POST
+* Endpoint: event/edit_date
+* Parameters: Dates (String[]), Event ID (Int), Action (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "date": [
+    "2023-12-12",
+    "2023-12-30"
+  ],
+  "event_id": 123,
+  "action": 'delete'
+}
+```
+  - Response(s):
+```
+{
+  "status": "success"
+}
+```
+or 
+```
+{
+  "error": "Date already added to Event"
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters, Requested Date already in event
+
+### Get Votes
+* Endpoint Name: Event Dates
+* Description: Shows all event dates from a single event
+* Endpoint Type: GET
+* Endpoint: event/dates
 * Parameters: Event ID (Int)
 * Return Type: JSON
 * Example Case:
@@ -514,31 +668,69 @@ or
   - Response(s):
 ```
 {
-  "2023-03-12": 5,
-  "2023-03-25": 2,
-  "2023-04-01": 1
+  [
+    "2023-03-12"
+    "2023-03-25"
+    "2023-04-01"
+  ]
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Event ID not found, Votes not found
-
-  * Sequence Diagram
-![Sequence Diagram](./Sequence_Diagram/GetVotesSD.png)
-
-### Set Primary
-
-* Endpoint Name: Set Primary
-* Description: Sets the primary date
-* Endpoint Type: POST
-* Endpoint: \primary
-* Parameters: Event ID (Int), Date (String)
+  - 400: Missing Body Parameters
+ 
+### Get Event Info
+* Endpoint Name: Event Info
+* Description: Shows all event info from an event
+* Endpoint Type: GET
+* Endpoint: event/get_info
+* Parameters: Event ID (Int)
 * Return Type: JSON
 * Example Case:
   - Request:
 ```
 {
+  "event_id": 123
+}
+```
+  - Response(s):
+```
+{
+    "event": {
+        "name": "testvaliddatesecondtry",
+        "host": "shinste",
+        "start": "18:03:01",
+        "end": "20:03:01",
+        "primary": "2023-03-23",
+        "primary_end": "2023-10-23",
+    },
+    "user": [
+        "kendrick",
+        "joseph"
+        ],
+    "date": [
+        "2023-08-23",
+        "2023-11-23",
+        "2023-03-23"
+    ]
+}
+```
+* Error Handling:
+  - 400: Missing Body Parameters
+
+ ### Invite
+* Endpoint Name: Invite
+* Description: Invite users to an event
+* Endpoint Type: POST
+* Endpoint: event/invite
+* Parameters: Username (String), Event ID (Int), Name (String)
+* Return Type: JSON
+* Example Case:
+  - Request:
+```
+{
+  "username": "new_friend"
   "event_id": 123,
-  "date": "2023-04-13"
+  "name": "skiing trip"
 }
 ```
   - Response(s):
@@ -550,8 +742,9 @@ or
 or 
 ```
 {
-  "status": "failure"
+  "error": "User already in event"
 }
 ```
-  * Sequence Diagram
-![Sequence Diagram](./Sequence_Diagram/SetPrimarySD.png)
+* Error Handling:
+  - 400: Missing Body Parameters, Inviting User already in event
+
