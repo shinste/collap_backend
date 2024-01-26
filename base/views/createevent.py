@@ -44,15 +44,17 @@ class CreateEvent(CreateAPIView):
         # Creation of Event
         event_instance = event_serializer.save()
         
-        
-        # Adding host as sole participant in event
-        host_model = {
-                'event_id' : event_instance.pk,
-                'username' : event_data["host"]
-            }
-        host_instance = EventUserSerializer(data=host_model)
-        
-        
+        try:
+            # Adding host as sole participant in event
+            host_model = {
+                    'event_id' : event_instance.pk,
+                    'username' : event_data["host"]
+                }
+            host_instance = EventUserSerializer(data=host_model)
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
+            
+            
         if host_instance.is_valid():
             host_instance.save()
         else:
