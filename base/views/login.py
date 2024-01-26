@@ -8,7 +8,7 @@ class Login(ListAPIView):
         username = request.GET.get('username')
         password = request.GET.get('password')
         if not username or not password:
-            return JsonResponse({'error':'Missing Input'})
+            return JsonResponse({'error':'Missing Input'}, status=400)
         try:
             databasepassword = user.objects.filter(username=username).values_list('password', flat=True).first()
         except:

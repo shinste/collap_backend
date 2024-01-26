@@ -7,7 +7,7 @@ class NotificationView(ListAPIView):
     def list(self, request, *args, **kwargs):
         username = request.GET.get('username')
         if not username:
-            return JsonResponse({'error':'Missing Input'})
+            return JsonResponse({'error':'Missing Input'}, status=400)
 
         notifs = Notification.objects.filter(username=username).values()
 

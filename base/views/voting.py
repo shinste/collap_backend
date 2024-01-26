@@ -39,6 +39,6 @@ class Voting(CreateAPIView):
             if vote_instance.is_valid():
                 vote_instance.save()
             else:
-                return JsonResponse({'error': str(vote_instance.errors)})
+                return JsonResponse({'error': str(vote_instance.errors)}, status=400)
         notification_instance.delete()
         return JsonResponse({'status': 'success'}, status=200)

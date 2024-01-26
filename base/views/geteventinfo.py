@@ -7,7 +7,7 @@ class GetEventInfo(ListAPIView):
     def list(self, request, *args, **kwargs):
         event_id = request.GET.get('event_id')
         if not event_id:
-            return JsonResponse({'error':'Missing Input'})
+            return JsonResponse({'error':'Missing Input'}, status=400)
         event = Event.objects.filter(event_id=event_id).values().first()
         all_users = list(EventUser.objects.filter(event_id=event_id).values_list('username', flat=True))
         event['participants'] = all_users
