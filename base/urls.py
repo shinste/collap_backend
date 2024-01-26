@@ -25,7 +25,7 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    path('', Homepage.as_view(), name="homepage"),
+    path('', admin.site.urls, name="homepage"),
     path('/admin', admin.site.urls, name="admin"),
     path('event/view/', ViewEvents.as_view(), name="event view"),
     path('notification/', NotificationView.as_view() , name="notifications"),
