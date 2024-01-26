@@ -22,7 +22,7 @@ class user(models.Model):
 
 
 class Event(models.Model):
-    event_id = models.CharField(max_length=20, primary_key=True, default=uuid.uuid4, unique=True)
+    event_id = models.CharField(max_length=50, primary_key=True, default=uuid.uuid4, unique=True)
     primary_date = models.DateField()
     name = models.CharField(max_length=100)
     host = models.ForeignKey(user, on_delete=models.CASCADE)
