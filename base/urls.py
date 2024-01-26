@@ -25,8 +25,8 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    path('', admin.site.urls, name="homepage"),
-    path('/admin', admin.site.urls, name="admin"),
+    # path('', admin.site.urls, name="homepage"),
+    # path('/admin', admin.site.urls, name="admin"),
     path('event/view/', ViewEvents.as_view(), name="event view"),
     path('notification/', NotificationView.as_view() , name="notifications"),
     path('register/', Register.as_view(), name="register"),
@@ -47,5 +47,6 @@ urlpatterns = [
     path('event/push_votes/', PushVote.as_view(), name="push votes"),
     path('event/edit_date/', EditDate.as_view(), name="edit date"),
     path('event/change_primary/', ChangePrimary.as_view(), name="change primary date"),
-    path('get-csrf-token/', get_csrf_view.as_view(), name='get_csrf_token')
+    path('get-csrf-token/', get_csrf_view.as_view(), name='get_csrf_token'),
+    path('', admin.site.urls, name="homepage"),
 ]
