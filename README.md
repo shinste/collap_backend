@@ -12,6 +12,13 @@ Although I took a lot of time trying to document all the backend logic and endpo
 Another reflection I have about not seeing the larger scope during this project is not planning and implementing more features than I had designed the application to have. My application lacks some features that I had overlooked during my planning phase, and I regret not taking more time to add more to my application. It wasn't a large issue implementing these add-ons during the development process, but it was very difficult going through many ideas during development and spending more time delaying my overall progress with the project. At one point I decided that I need to ignore most ideas unless they were vital to the logic of the application. My lack of time and desire to put this project on my resume contributed to this decision.
 
 ## Links
+
+#### Note IMPORTANT!!!
+Feel free to register your own account to check it out, but since it's difficult to see all the features of an event planning application without many users and events, I've preloaded accounts with some data so that you can check it out! Feel free to modify any information on each of these acccounts
+* username: githubexample1 password: githubexample1
+* username: githubexample2 password: githubexample2
+* username: githubexample3 password: githubexample3
+
 ### Hosted Project
 https://master--illustrious-unicorn-98eadd.netlify.app/
 ### Front End Documentation
