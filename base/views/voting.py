@@ -30,7 +30,7 @@ class Voting(CreateAPIView):
         if not notification_instance:
             return JsonResponse({'error':'Sorry, we cannot find this notification!'}, status=400)
         # Adding the votes to the vote table
-        for date in dates:
+        for date in set(dates):
             each_vote = {
                 'username': username,
                 'event_id': event_id,
