@@ -13,9 +13,10 @@ class Voting(CreateAPIView):
         dates = entire_data.get("dates")
         if not username or not event_id or not dates:
             return JsonResponse({"error":"Missing Input"},status=400)
-        notification_instance = Notification.objects.filter(username=username, event_id=event_id)
-        # Precheck: checks if event exists
         event_instance = Event.objects.filter(event_id=event_id).first()
+        name = event_instance.name
+        notification_instance = Notification.objects.filter(username=username, event_id=event_id, notification=f"You have been invited to {name}")
+        # Precheck: checks if event exists
         if not event_instance:
             if notification_instance:
                 notification_instance.delete()
@@ -26,7 +27,7 @@ class Voting(CreateAPIView):
             if notification_instance:
                 notification_instance.delete()
             return JsonResponse({'error':'Sorry, either you were kicked from this event or you were never apart of it!'}, status=400)
-        elif not notification_instance:
+        if not notification_instance:
             return JsonResponse({'error':'Sorry, we cannot find this notification!'}, status=400)
         # Adding the votes to the vote table
         for date in dates:

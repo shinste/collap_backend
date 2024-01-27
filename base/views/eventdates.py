@@ -9,4 +9,4 @@ class EventDates(ListAPIView):
         if not event_id:
             return JsonResponse({'error': 'Missing Input'}, status=400)
         all_dates = list(EventDate.objects.filter(event_id=event_id).values_list('date', flat=True))
-        return JsonResponse(all_dates, safe=False, status=200)  
+        return JsonResponse(all_dates, safe=False, status=200) 
