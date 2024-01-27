@@ -15,7 +15,7 @@ class Voting(CreateAPIView):
             return JsonResponse({"error":"Missing Input"},status=400)
         event_instance = Event.objects.filter(event_id=event_id).first()
         name = event_instance.name
-        notification_instance = Notification.objects.filter(username=username, event_id=event_id, notification=f"You have been invited to {name}")
+        notification_instance = Notification.objects.filter(username=username, event_id=event_id, notification=f"You must vote on date for {name}")
         # Precheck: checks if event exists
         if not event_instance:
             if notification_instance:
