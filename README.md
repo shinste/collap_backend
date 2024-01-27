@@ -746,5 +746,5 @@ or
 }
 ```
 * Error Handling:
-  - 400: Missing Body Parameters, Inviting User already in event
+  - 400: Missing Body Parameters, Inviting User already in event, User already has an invite
 
