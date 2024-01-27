@@ -16,6 +16,8 @@ class Invite(CreateAPIView):
         
         if username in EventUser.objects.filter(event_id = event_id).values_list('username', flat=True):
             return JsonResponse({'error':'User already in event'}, status=400)
+        if f"You have been invited to {name}" in Notification.objects.filter(username = username).values_list('notification', flat=True):
+            return JsonResponse({'error':'User already has invite'}, status=400)
         invite_info = {
             'event_id' : event_id,
             'username' : username,
