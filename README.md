@@ -35,19 +35,16 @@ Features for our application that we plan to implement are as followed:
   - View an event(s)
   - Create/Host event
   - Leave event
+  - Cancel event
   - Vote on event
-* Event Hosting
-  - Changing primary date and time
-  - Deleting/Adding possible dates
-  - Vote Handling
-  - Date Recommendations
-  - Kicking/Inviting Users
-* Notification Handling
-  - Dismissing any non-voting notifications
-  - Joining via notification
-  - Voting via notification
+* Push Objectives
+  - Pushing voting objectives on dates of an event
+  - Anonymous Voting
+* Conflict System
+  - Suggest possible dates based on voting
+  - Suggest dates that can work for the most people if full participation isn’t possible
 * Database
-  - PostgreSQL
+  - SQLite
 
 ## API Documentation
 ### Login

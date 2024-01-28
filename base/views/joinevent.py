@@ -107,6 +107,18 @@ class JoinEvent(CreateAPIView):
                         joining_notif = NotificationSerializer(data=notif_data)
                         if joining_notif.is_valid():
                             joining_notif.save()
+        
+            # if the event is currently undergoing a vote we will give it to the new user
+            if Event.objects.get(event_id=event_id_data).voting != "no":
+                voting_data = {
+                            'event_id': event_id_data,
+                            'username': name,
+                            'notification': f"You must vote on date for {event.name}"
+                        }
+                vote_notif = NotificationSerializer(data=voting_data)
+                if vote_notif.is_valid():
+                    vote_notif.save()
+            
         except Exception as e:
             return JsonResponse({'error': f'{e}'}, status=400)
         # Return a success response
