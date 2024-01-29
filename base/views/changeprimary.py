@@ -18,14 +18,11 @@ class ChangePrimary(CreateAPIView):
                 return JsonResponse({'error':'Missing Input'}, status=400)
 
             changes = Event.objects.get(event_id=event_id)
-            if changes.primary_date == primary:
-                return JsonResponse({'error': 'Date already the Primary Date'}, status=400)
-            else:
-                changes.primary_date = primary
-                changes.primary_end = primary_end
-                changes.start = start
-                changes.end = end
-                changes.save()
+            changes.primary_date = primary
+            changes.primary_end = primary_end
+            changes.start = start
+            changes.end = end
+            changes.save()
             return JsonResponse({"status":"success"}, status=200)
         except Exception as e:
             return JsonResponse({'error': str(e)})
