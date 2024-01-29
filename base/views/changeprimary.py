@@ -25,4 +25,4 @@ class ChangePrimary(CreateAPIView):
             changes.save()
             return JsonResponse({"status":"success"}, status=200)
         except Exception as e:
-            return JsonResponse({'error': str(e)})
+            return JsonResponse({'error': str(e)}, status=400)

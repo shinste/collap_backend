@@ -27,5 +27,5 @@ class Invite(CreateAPIView):
         if invite_serializer.is_valid():
             invite_serializer.save()
         else:
-            return JsonResponse(invite_serializer.errors, status=400)
+            return JsonResponse({"error": "This user does not exist, please try again!"}, status=400)
         return JsonResponse({"status":"success"}, status=200)
