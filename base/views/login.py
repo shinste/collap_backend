@@ -1,9 +1,9 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import CreateAPIView
 from django.http import JsonResponse
 from ..models import user
 
 # Get Request that checks the username's password in database (temporary?)
-class Login(ListAPIView):
+class Login(CreateAPIView):
     def create(self, request, *args, **kwargs):
         entire_data = request.data
         username = entire_data.get('username')
