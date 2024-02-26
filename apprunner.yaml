@@ -1,7 +1,24 @@
+version: 1.0
+
+# Define the runtime environment
+runtime: python3
+# You can specify a specific Python version if needed, like python3.11
+
+# Define the build commands
+build:
+  commands:
+    # Install dependencies (assuming you have a requirements.txt file)
+    - pip install -r requirements.txt
+    # Collect static files (if necessary)
+    - python3 manage.py collectstatic --noinput
+
+# Define the run settings
 run:
-  runtime-version: 3.11
-  pre-run:  
-    - pip3 install pipenv
-    - pipenv install
-    - python3 base.py
-  command: pipenv run gunicorn collap.wsgi --log-file -
+  # Specify the command to start the Django application
+  command: gunicorn collap.wsgi:application --bind 0.0.0.0:$PORT
+  # You might need to adjust the command depending on your project structure and settings
+
+  # Optional: specify the network settings (ports, protocols, etc.)
+  network:
+    # The port your Django application listens on
+    port: 8080
