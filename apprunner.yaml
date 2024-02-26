@@ -4,8 +4,9 @@ build:
   commands:
     build:
       - pip install -r requirements.txt
+      - pip install pipenv
+      - pipenv install 
 run:
-  runtime-version: 3.10
   command: sh startup.sh
   network:
     port: 8000
