@@ -27,7 +27,7 @@ class Event(models.Model):
     name = models.CharField(max_length=100)
     host = models.ForeignKey(user, on_delete=models.CASCADE)
     start = models.TimeField()
-    end = models.TimeField()
+    end = models.TimeField()     
     primary_end = models.DateField()
     voting = models.CharField(max_length=3, default="no")
     def __str__(self):
