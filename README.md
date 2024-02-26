@@ -20,6 +20,10 @@ Feel free to register your own account to check it out, but since it's difficult
 * username: githubexample3 password: githubexample3
 
 ### Hosted Project
+
+## NOTE
+Free trial on Azure has terminated on 2/21/2024. Will look for new platform to host backend on 2/23/2024.
+
 https://master--illustrious-unicorn-98eadd.netlify.app/
 ### Front End Documentation
 https://github.com/shinste/collap_frontend
