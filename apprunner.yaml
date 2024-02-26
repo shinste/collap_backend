@@ -2,7 +2,6 @@ version: 1.0
 
 # Define the runtime environment
 runtime: python3
-# You can specify a specific Python version if needed, like python3.11
 
 # Define the build commands
 build:
@@ -16,9 +15,4 @@ build:
 run:
   # Specify the command to start the Django application
   command: gunicorn collap.wsgi:application --bind 0.0.0.0:$PORT
-  # You might need to adjust the command depending on your project structure and settings
-
-  # Optional: specify the network settings (ports, protocols, etc.)
-  network:
-    # The port your Django application listens on
-    port: 8080
+  # Adjust the command according to your project structure and settings
