@@ -1,18 +1,29 @@
 version: 1.0
-
-# Define the runtime environment
 runtime: python3
-
-# Define the build commands
 build:
   commands:
-    # Install dependencies (assuming you have a requirements.txt file)
-    - pip install -r requirements.txt
-    # Collect static files (if necessary)
-    - python3 manage.py collectstatic --noinput
-
-# Define the run settings
+    build:
+      - pip install -r requirements.txt
 run:
-  # Specify the command to start the Django application
-  command: gunicorn collap.wsgi:application --bind 0.0.0.0:$PORT
-  # Adjust the command according to your project structure and settings
+  runtime-version: 3.10
+  command: sh startup.sh
+  network:
+    port: 8000
+# version: 1.0
+
+# # Define the runtime environment
+# runtime: python3
+
+# # Define the build commands
+# build:
+#   commands:
+#     # Install dependencies (assuming you have a requirements.txt file)
+#     - pip install -r requirements.txt
+#     # Collect static files (if necessary)
+#     - python3 manage.py collectstatic --noinput
+
+# # Define the run settings
+# run:
+#   # Specify the command to start the Django application
+#   command: gunicorn collap.wsgi:application --bind 0.0.0.0:$PORT
+#   # Adjust the command according to your project structure and settings
