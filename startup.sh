@@ -8,4 +8,4 @@ exec 2>&1
 python manage.py collectstatic --noinput
 
 # Run Gunicorn with your Django application
-gunicorn --workers 2 myproject.wsgi
+gunicorn --workers 2 collap.wsgi
