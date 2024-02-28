@@ -21,6 +21,7 @@ settings_module = 'collap.settings'
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 # from whitenoise import WhiteNoise
 application = get_wsgi_application()
+serve(application)
 
 
 

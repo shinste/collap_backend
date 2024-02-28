@@ -5,9 +5,8 @@ build:
     build:
       - pip3 install -r requirements.txt
       - python3 manage.py collectstatic --noinput
-      - pipenv install
 run:
   runtime-version: 3.11
-  command: pipenv run gunicorn collap.wsgi --log-file -
+  command: waitress-serve --listen=*:8000 collap.wsgi:application
   network:
     port: 8000
