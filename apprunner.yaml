@@ -7,6 +7,6 @@ build:
       - python3 manage.py collectstatic --noinput
 run:
   runtime-version: 3.11
-  command: waitress-serve --port=8000 collap.wsgi:application
+  command: waitress-serve --port=80 collap.wsgi:application
   network:
-    port: 8000
+    port: 80
