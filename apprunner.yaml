@@ -5,6 +5,7 @@ build:
     build:
       - pip3 install -r requirements.txt
       - python3 manage.py collectstatic --noinput
+      - pip3 install waitress
 run:
   runtime-version: 3.11
   command: waitress-serve --port=8000 collap.wsgi:application
