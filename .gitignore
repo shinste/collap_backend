@@ -60,3 +60,7 @@ db.sqlite3
 # static
 media
 staticfiles
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

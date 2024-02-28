@@ -5,28 +5,8 @@ build:
     build:
       - pip3 install -r requirements.txt
       - python3 manage.py collectstatic --noinput
-      - pip3 install pipenv
-      - pipenv install
 run:
   runtime-version: 3.11
-  command: python3 manage.py runserver
+  command: waitress-serve --port=8000 collap.wsgi:application
   network:
     port: 8000
-# version: 1.0
-
-# # Define the runtime environment
-# runtime: python3
-
-# # Define the build commands
-# build:
-#   commands:
-#     # Install dependencies (assuming you have a requirements.txt file)
-#     - pip install -r requirements.txt
-#     # Collect static files (if necessary)
-#     - python3 manage.py collectstatic --noinput
-
-# # Define the run settings
-# run:
-#   # Specify the command to start the Django application
-#   command: gunicorn collap.wsgi:application --bind 0.0.0.0:$PORT
-#   # Adjust the command according to your project structure and settings

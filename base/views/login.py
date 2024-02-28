@@ -1,9 +1,16 @@
 from rest_framework.generics import CreateAPIView
 from django.http import JsonResponse
 from ..models import user
+from base.serializers import UserSerializer
+# from base.serializers import LoginSerializer
 
 # Get Request that checks the username's password in database (temporary?)
 class Login(CreateAPIView):
+    serializer_class = UserSerializer
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     return JsonResponse({'status': 'success'})
     def create(self, request, *args, **kwargs):
         entire_data = request.data
         username = entire_data.get('username')

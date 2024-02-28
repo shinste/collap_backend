@@ -15,14 +15,14 @@ import sys
 sys.path.append('/mnt/d/Work/Software_Projects/collap_backend')
 
 
-settings_module = 'collap.production' if 'WEBSITE_HOSTNAME' in os.environ else 'collap.settings'
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'collap.production')
-os.environ['DJANGO_SETTINGS_MODULE'] = settings_module
-
-print(f"DJANGO_SETTINGS_MODULE after: {settings_module}")
+settings_module = 'collap.settings' 
+# if 'WEBSITE_HOSTNAME' in os.environ else 'collap.settings'
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
+from whitenoise import WhiteNoise
+application = WhiteNoise(get_wsgi_application())
 
 # settings_module = 'collap.production' if 'WEBSITE_HOSTNAME' in os.environ else 'collap.settings'
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'collap.production')
 
-application = get_wsgi_application()
+# application = get_wsgi_application()
 

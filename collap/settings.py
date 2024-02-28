@@ -20,8 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['https://asmqnpup9e.us-west-2.awsapprunner.com', 'localhost']
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -200,3 +201,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 SECURE_SSL_REDIRECT = False
+
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'US/Pacific'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
