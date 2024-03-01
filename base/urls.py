@@ -44,5 +44,5 @@ urlpatterns = [
     path('event/push_votes/', PushVote.as_view(), name="push votes"),
     path('event/edit_date/', EditDate.as_view(), name="edit date"),
     path('event/change_primary/', ChangePrimary.as_view(), name="change primary date"),
-    # path('/admin/', admin.site.urls, name="homepage"),
+    path('', admin.site.urls, name="homepage"),
 ]

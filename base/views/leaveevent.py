@@ -17,7 +17,10 @@ class LeaveEvent(CreateAPIView):
 
         
         # PreCheck: check if the participant is the host
-        event = Event.objects.filter(event_id=event_id).first()
+        try: 
+            event = Event.objects.filter(event_id=event_id).first()
+        except Exception as e:
+            return JsonResponse({'error': e})
         if username == str(event.host):
             return JsonResponse({'error':'The Host cannot leave the Event, Try deleting the Event instead!'}, status=400)
         
