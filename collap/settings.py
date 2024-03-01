@@ -35,41 +35,14 @@ ALLOWED_HOSTS = ['https://asmqnpup9e.us-west-2.awsapprunner.com', 'localhost', '
 # }
 STATIC_ROOT = BASE_DIR/'staticfiles'
 
-# SECRET_KEY = 'Kavo6O4bu5ahsdkjfa78ydsfakjnlsdlkds9834y4938y23jlnkshugawy8932ifeesfkjsdf'
-
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-
-# ALLOWED_HOSTS = ["collapbackend.azurewebsites.net"]
-
-# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-
-# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-
-# CACHES = {
-#         "default": {  
-#             "BACKEND": "django_redis.cache.RedisCache",
-#             "LOCATION": os.environ.get('CACHELOCATION'),
-#             "OPTIONS": {
-#                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         },
-#     }
-# }
-
-
-# CACHES = {
-#         "default": {  
-#             "BACKEND": "django_redis.cache.RedisCache",
-#             "LOCATION": os.environ.get('AZURE_REDIS_CONNECTIONSTRING'),
-#             "OPTIONS": {
-#                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#                 "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
-#         },
-#     }
-# }
+STORAGES = {
+    "default" : {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"
+    }
+}
 INSTALLED_APPS = [
     'rest_framework',
     'django.contrib.admin',
