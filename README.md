@@ -21,13 +21,12 @@ Feel free to register your own account to check it out, but since it's difficult
 
 ### Hosted Project
 
-## NOTE
-Free trial on Azure has terminated on 2/21/2024. Will look for new platform to host backend on 2/23/2024.
+
 
 https://master--illustrious-unicorn-98eadd.netlify.app/
 ### Front End Documentation
-https://github.com/shinste/collap_frontend
-### Back End Documentation and Design (This Repository)
+https://github.com/shinste/collap_frontend (Hosted on Netlify)
+### Back End Documentation and Design (Hosted on AWS through Appliku) (This Repository)
 https://github.com/shinste/collap_backend
 
 ## Scope
