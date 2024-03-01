@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--p9_2ew#3-z2elx#l&rh$)wq)899%$_zap$#^10l(n*7&6d*qb'
 DEBUG = False
-ALLOWED_HOSTS = ['https://asmqnpup9e.us-west-2.awsapprunner.com', 'localhost']
+ALLOWED_HOSTS = ['https://asmqnpup9e.us-west-2.awsapprunner.com', 'localhost', 'https://collapbackend.applikuapp.com']
 
 # DATABASES = {
 #     'default': {
