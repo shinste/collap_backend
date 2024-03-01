@@ -1,0 +1,1 @@
+web: gunicorn collap.wsgi --log-file -
