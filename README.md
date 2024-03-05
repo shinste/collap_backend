@@ -52,7 +52,7 @@ Features for our application that we plan to implement are as followed:
 ### Login
 * Endpoint Name: Login
 * Description: Authorizing User
-* Endpoint Type: GET
+* Endpoint Type: POST
 * Endpoint: \login
 * Parameters: Username (String), Password(String)
 * Return Type: JSON
