@@ -92,6 +92,7 @@ class CreateEvent(CreateAPIView):
                 else:
                     # Code below should theoretically never run but just in case
                     event_instance.delete()
+                    return JsonResponse({'date input': str(date_serializer.errors)})
                     return JsonResponse({'error': "Date Input Error!"}, status=400)
             # Availability Insert
             for date in date_data:
