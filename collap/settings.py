@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'collap.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '-',
+        'NAME': 'postgres',
         'USER': 'shinste',
         'PASSWORD': 'collappassword',
         'HOST': 'collapdatabase.cfo8yeywaxxw.us-west-2.rds.amazonaws.com',
