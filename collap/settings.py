@@ -108,11 +108,14 @@ WSGI_APPLICATION = 'collap.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'collapdatabase',
+        'USER': 'shinste',
+        'PASSWORD': 'collappassword',
+        'HOST': 'collapdatabase.cfo8yeywaxxw.us-west-2.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
-
 
 # database_url = os.environ.get("DATABASE_URL")
 # DATABASES["default"] = dj_database_url.parse("postgres://collap_postgresql_db_user:4hDFC0YklQTToPlcGXBJ7z506BFDi3Sf@dpg-cmffcsen7f5s73c4vi40-a.oregon-postgres.render.com/collap_postgresql_db")
