@@ -21,8 +21,6 @@ Feel free to register your own account to check it out, but since it's difficult
 
 ### Hosted Project
 
-### Note IMPOTANT
-Because I switched from Azure to a 3rd party hosting service for AWS, there was an issue with the existing database entries, and I have run out of free deployments for the month. I will pay for more deployments to fix the issue on 3/4/24. In the meantime, the post requests will not work, thank you.
 
 https://master--illustrious-unicorn-98eadd.netlify.app/
 ### Front End Documentation
