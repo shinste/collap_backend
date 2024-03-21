@@ -21,6 +21,8 @@ Feel free to register your own account to check it out, but since it's difficult
 
 ### Hosted Project
 
+#### Note:
+For cost purposes, the EC2 instance that hosts this app will be scheduled to run between 9AM - 5PM (Pacific), Mon - Fri.
 
 https://master--illustrious-unicorn-98eadd.netlify.app/
 ### Front End Documentation
