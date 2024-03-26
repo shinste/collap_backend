@@ -19,16 +19,15 @@ Feel free to register your own account to check it out, but since it's difficult
 * username: githubexample2 password: githubexample2
 * username: githubexample3 password: githubexample3
 
-### Hosted Project
+### Hosted Project (9AM - 5PM (Pacific), Mon - Fri)
+[Collap](https://master--illustrious-unicorn-98eadd.netlify.app/)
 
-#### Note:
-For cost purposes, the EC2 instance that hosts this app will be scheduled to run between 9AM - 5PM (Pacific), Mon - Fri.
+### Want to see my Portfolio?
+[Portfolio Website
+](https://master--stephenshinportfolio.netlify.app/)
 
-https://master--illustrious-unicorn-98eadd.netlify.app/
-### Front End Documentation
+#### Front End Documentation
 https://github.com/shinste/collap_frontend (Hosted on Netlify)
-### Back End Documentation and Design (Hosted on AWS through Appliku) (This Repository)
-https://github.com/shinste/collap_backend
 
 ## Scope
 Features for our application that we plan to implement are as followed:
